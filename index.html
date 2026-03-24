@@ -1,0 +1,4410 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>المقرات البابوية القبطية — رحلة عبر التاريخ</title>
+  <link rel="icon" type="image/png"
+    href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAADWklEQVR4nO2ZXU8TURCGVxO91j/ClR+J+gcMJnqpXnAtlwJCQyLYFmiEftIWUgEp/SBgUIwaMCZIIkhCW1pEpDOVcyp/AE280RvGTENrC6VbhNJd0zeZbLbdnXmf7jmzZ7eKUlNxCcR6iRiRiD95y/uKXiRSqRufE6vkGwuQ2eHMbHk/DXBL0YMkYsTh81Gn1ZYLp+8JSYBlRQ+SiL/zzWdDAvxS9CCJSB2PewvMP+ztI/5c0YMkIrWazAUAvK8rgMbmZmrr6qaOPisZzF3U2NKiLYCttbXzX5PJKwKgSSI+EwBxAfCdTXLca2raF9nvuLUKxKRAnODzOU86nT53LMaI6JRIpe4KxPcS4Ede0YJIbWzQ4tISBaemyDk0TD1uNxntjn0Tt2jY7GTxeGh69i3NLyxQIh7P5DuoFvtgP5uId1QBBOKjyPIyDQVD1O3qzxR0B0PkDY/vi/5AsHzTRcJbJGd+uAPBzHHsYzgUomgkwjCdJQEkwJZ1YLCwh/v9Bxaxj4xWDMA56i84nn0JxG9qV8DIpEzM5Ba3h8LT0yUL2YZHKgIQfvGSLP1u6uErEMxdgQ7VYcRjTSLO8aQUiNuJREK1WDmGTXuGm1cl52oiwb/49m5zmEsj3lYOKyI6LQE2n8/MHAngkc1OTv9Y2QBTM7M8gVPcVJSjSiBekoixA7sEYs5Uh9VGtpGn1O32ZCa40eEki3cgM+H3gsoS+bjeZjJ5QTkJ5QOo/bJ7ARQtqAZQbdUAqq0aQLXFq8XAxKR+AQTARTbj8gcyNzDdAbDYjNrapgZQSf0PAAvRaJRc/jF9AsRisTPZdtpmNudWn3vD4h3UJgArC8BvIHj9397TU/R5mruVLxDQNkB2y88EDOMJhQsgdtf8C4rWAXIgDieZXf3kyQNQtKZSANmt2eWiyddv9AvQ+fdRUlvD57AAihYlawBVVg2gmuKuousuJMtcjebfiZVqan19/awEuCkBxgXAl38BEHweQJjzcL6T/hc+9Wpjnh58GqL6uIkur7RSXex+2cHH18dNmfM5D+dLA1w/CfOmj8kINazaDmVYLRpW7bSUjPLrdGPlzAMY3iUX6dpK+7Gar9uNqysGmtn4wEPLUBkAxGYBsKPyWvxIIQB2uE5FALSoP9H4/Gvdx1u9AAAAAElFTkSuQmCC"
+    alt="statue-of-christ-the-redeemer" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <style>
+    :root {
+      --gold: #d4af37;
+      --gold-l: #f2d060;
+      --gold-d: #9a7d1f;
+      --bronze: #cd7f32;
+      --cyan: #64c8ff;
+      --navy: #050d1a;
+      --navy2: #071525;
+      --navy3: #0a1e38;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    body {
+      background: var(--navy);
+      color: #e8e0d0;
+      font-family: "Cairo", sans-serif;
+    }
+
+    /* Scanline overlay */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 2px,
+          rgba(0, 0, 0, 0.04) 2px,
+          rgba(0, 0, 0, 0.04) 4px);
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* Grid background */
+    #gridBg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(212, 175, 55, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    #vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background: radial-gradient(ellipse 80% 80% at 50% 50%,
+          transparent 40%,
+          rgba(0, 0, 0, 0.7) 100%);
+    }
+
+    #particleCanvas {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* === APP SHELL === */
+    #app {
+      position: relative;
+      z-index: 10;
+      width: 100vw;
+      height: 100vh;
+      display: grid;
+      grid-template-rows: 68px 1fr 88px;
+    }
+
+    /* === HEADER === */
+    #hdr {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+      background: rgba(5, 13, 26, 0.92);
+      backdrop-filter: blur(12px);
+      position: relative;
+      z-index: 50;
+    }
+
+    .hdr-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hdr-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1.15;
+    }
+
+    .hdr-sub {
+      font-size: 0.58rem;
+      color: rgba(212, 175, 55, 0.45);
+      letter-spacing: 0.12em;
+      font-family: monospace;
+    }
+
+    .hdr-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .live-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: blink 1.8s ease-in-out infinite;
+    }
+
+    .hdr-status {
+      font-size: 0.72rem;
+      color: rgba(212, 175, 55, 0.55);
+    }
+
+    .coords-disp {
+      font-family: monospace;
+      font-size: 0.68rem;
+      color: rgba(212, 175, 55, 0.45);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, var(--gold-d), var(--gold));
+      color: #060e1a;
+      font-family: "Cairo", sans-serif;
+      font-weight: 700;
+      padding: 0.45rem 1.2rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: filter 0.2s;
+      white-space: nowrap;
+    }
+
+    .btn-gold:hover {
+      filter: brightness(1.15);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      font-family: "Cairo", sans-serif;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.2s;
+    }
+
+    .btn-outline:hover {
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    /* === MAP SECTION === */
+    #mapSection {
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: padding-right 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    #egyptSvg {
+      height: 100%;
+      max-height: calc(100vh - 158px);
+      width: auto;
+      max-width: 100%;
+      filter: drop-shadow(0 0 40px rgba(212, 175, 55, 0.12));
+    }
+
+    /* HUD corners */
+    .hud {
+      position: absolute;
+      width: 55px;
+      height: 55px;
+      pointer-events: none;
+    }
+
+    .hud::before,
+    .hud::after {
+      content: "";
+      position: absolute;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .hud::before {
+      width: 2px;
+      height: 22px;
+    }
+
+    .hud::after {
+      width: 22px;
+      height: 2px;
+    }
+
+    .hud.tl {
+      top: 12px;
+      left: 12px;
+    }
+
+    .hud.tl::before {
+      top: 0;
+      left: 0;
+    }
+
+    .hud.tl::after {
+      top: 0;
+      left: 0;
+    }
+
+    .hud.tr {
+      top: 12px;
+      right: 12px;
+      transform: scaleX(-1);
+    }
+
+    .hud.tr::before {
+      top: 0;
+      left: 0;
+    }
+
+    .hud.tr::after {
+      top: 0;
+      left: 0;
+    }
+
+    .hud.bl {
+      bottom: 12px;
+      left: 12px;
+      transform: scaleY(-1);
+    }
+
+    .hud.bl::before {
+      top: 0;
+      left: 0;
+    }
+
+    .hud.bl::after {
+      top: 0;
+      left: 0;
+    }
+
+    .hud.br {
+      bottom: 12px;
+      right: 12px;
+      transform: scale(-1);
+    }
+
+    .hud.br::before {
+      top: 0;
+      left: 0;
+    }
+
+    .hud.br::after {
+      top: 0;
+      left: 0;
+    }
+
+    /* Map overlays */
+    .map-label {
+      position: absolute;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .map-label-tr {
+      top: 14px;
+      right: 18px;
+      text-align: right;
+    }
+
+    .map-label-bl {
+      bottom: 14px;
+      left: 18px;
+    }
+
+    .map-counter {
+      position: absolute;
+      bottom: 14px;
+      right: 18px;
+      z-index: 5;
+      text-align: right;
+    }
+
+    .counter-val {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .counter-lbl {
+      font-size: 0.6rem;
+      color: rgba(212, 175, 55, 0.4);
+    }
+
+    /* Map reset btn */
+    #resetBtn {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      opacity: 0;
+      pointer-events: none;
+      background: rgba(5, 13, 26, 0.85);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      color: var(--gold);
+      font-family: "Cairo", sans-serif;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.9rem;
+      border-radius: 5px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: opacity 0.3s;
+    }
+
+    #resetBtn.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* === MARKERS === */
+    .mk {
+      cursor: pointer;
+    }
+
+    .mk:hover .mk-core {
+      filter: url(#glow2);
+    }
+
+    .pulse1 {
+      animation: pulseA 2.5s ease-in-out infinite;
+    }
+
+    .pulse2 {
+      animation: pulseA 2.5s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes pulseA {
+
+      0%,
+      100% {
+        transform: scale(0.6);
+        opacity: 0.7;
+      }
+
+      50% {
+        transform: scale(1.8);
+        opacity: 0.1;
+      }
+    }
+
+    .mk-core {
+      transition: filter 0.3s;
+    }
+
+    /* === SIDE PANEL === */
+    /* width / height / top / transform owned by JS applyPanelSize() */
+    #sidePanel {
+      position: fixed;
+      right: 0;
+      background: rgba(3, 9, 20, 0.97);
+      backdrop-filter: blur(26px);
+      border-left: 1px solid rgba(212, 175, 55, 0.22);
+      overflow: hidden;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Topbar */
+    .panel-topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.9rem 1.2rem 0;
+      flex-shrink: 0;
+    }
+
+    .panel-tag {
+      font-size: 0.58rem;
+      color: rgba(212, 175, 55, 0.35);
+      letter-spacing: 0.14em;
+      font-family: monospace;
+    }
+
+    .close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: rgba(212, 175, 55, 0.5);
+      font-size: 1.1rem;
+      padding: 2px 8px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .close-btn:hover {
+      color: var(--gold);
+      background: rgba(212, 175, 55, 0.08);
+    }
+
+    /* Image — sticky at top of history tab so text scrolls over it */
+    .img-wrap {
+      width: calc(100% + 2.4rem);
+      margin-left: -1.2rem;
+      margin-right: -1.2rem;
+      margin-top: -0.85rem;
+      height: 220px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #081525, #040d1a);
+      position: sticky;
+      top: 0;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border-radius: 0;
+    }
+
+    .img-wrap img.loc-img {
+      position: absolute;
+      width: 100%;
+      height: 140%;
+      object-fit: cover;
+      object-position: center top;
+      display: none;
+      will-change: transform;
+      transform: translateY(0px);
+      top: 0;
+      left: 0;
+      transition: transform 0.05s linear;
+    }
+
+    .img-wrap img.loc-img.loaded {
+      display: block;
+    }
+
+    @keyframes kenBurns {
+      0% {
+        transform: translateY(0px) scale(1.03);
+      }
+
+      100% {
+        transform: translateY(-12px) scale(1);
+      }
+    }
+
+    .img-placeholder {
+      text-align: center;
+      color: rgba(212, 175, 55, 0.22);
+      pointer-events: none;
+      position: absolute;
+    }
+
+    .img-placeholder .icon {
+      font-size: 2.4rem;
+      margin-bottom: 6px;
+    }
+
+    .img-placeholder p {
+      font-size: 0.7rem;
+    }
+
+    .img-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top,
+          rgba(3, 9, 20, 1) 0%,
+          rgba(3, 9, 20, 0.7) 30%,
+          rgba(3, 9, 20, 0.15) 65%,
+          transparent 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .period-badge {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.55);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 5px;
+      padding: 3px 10px;
+      font-size: 0.72rem;
+      color: var(--gold);
+      font-family: "Amiri", serif;
+      backdrop-filter: blur(8px);
+    }
+
+    /* Download PNG button */
+    /* .img-dl-btn {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(3, 9, 20, 0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 6px;
+      color: rgba(212, 175, 55, 0.75);
+      font-family: "Cairo", sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    } */
+
+    .img-dl-btn:hover {
+      background: rgba(212, 175, 55, 0.14);
+      border-color: rgba(212, 175, 55, 0.6);
+      color: var(--gold);
+    }
+
+    /* Header inside panel */
+    .panel-hdr {
+      padding: 0.7rem 1.2rem 0;
+      flex-shrink: 0;
+    }
+
+    .panel-title {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: var(--gold);
+      font-family: "Amiri", serif;
+      line-height: 1.2;
+    }
+
+    .panel-sub {
+      font-size: 0.63rem;
+      color: rgba(212, 175, 55, 0.4);
+      letter-spacing: 0.07em;
+      font-family: monospace;
+      margin-top: 2px;
+    }
+
+    /* TABS */
+    .tab-bar {
+      display: flex;
+      gap: 0;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+      padding: 0 1.2rem;
+      margin-top: 0.7rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      font-family: "Cairo", sans-serif;
+      font-weight: 600;
+      color: rgba(212, 175, 55, 0.4);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.22s;
+      white-space: nowrap;
+      margin-bottom: -1px;
+    }
+
+    .tab-btn:hover {
+      color: rgba(212, 175, 55, 0.75);
+    }
+
+    .tab-btn.active {
+      color: var(--gold);
+      border-bottom-color: var(--gold);
+    }
+
+    /* Tab panes */
+    .tab-pane {
+      display: none;
+      flex-direction: column;
+      gap: 0.85rem;
+      overflow-y: auto;
+      padding: 0.85rem 1.2rem 1rem;
+      flex: 1;
+    }
+
+    .tab-pane.active {
+      display: flex;
+    }
+
+    .tab-pane::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .tab-pane::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.2);
+      border-radius: 2px;
+    }
+
+    /* Content after sticky image scrolls on top of it */
+    #tab-history .info-grid,
+    #tab-history .divider,
+    #tab-history>div:not(.img-wrap),
+    #tab-history .fun-fact-box {
+      position: relative;
+      z-index: 2;
+      background: rgba(3, 9, 20, 0.5);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border-radius: 8px;
+    }
+
+    /* History tab content */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg,
+          rgba(212, 175, 55, 0.4),
+          transparent);
+      flex-shrink: 0;
+    }
+
+    .section-label {
+      font-size: 0.6rem;
+      color: rgba(212, 175, 55, 0.38);
+      margin-bottom: 5px;
+      letter-spacing: 0.06em;
+    }
+
+    .desc-text {
+      font-family: "Amiri", serif;
+      font-size: 1rem;
+      line-height: 2;
+      color: rgba(240, 230, 210, 0.88);
+    }
+
+    .tw-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 0.9em;
+      background: var(--gold);
+      animation: blink 0.9s step-end infinite;
+      vertical-align: text-bottom;
+      margin-right: 2px;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .fun-fact-box {
+      background: linear-gradient(135deg,
+          rgba(212, 175, 55, 0.07),
+          rgba(205, 127, 50, 0.04));
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 8px;
+      padding: 0.85rem;
+      display: none;
+      flex-shrink: 0;
+    }
+
+    .fun-fact-head {
+      font-size: 0.6rem;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .fun-fact-text {
+      font-family: "Amiri", serif;
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: rgba(240, 230, 210, 0.82);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .info-card {
+      background: rgba(212, 175, 55, 0.04);
+      border: 1px solid rgba(212, 175, 55, 0.13);
+      border-radius: 8px;
+      padding: 0.55rem;
+      text-align: center;
+    }
+
+    .info-card-lbl {
+      font-size: 0.56rem;
+      color: rgba(212, 175, 55, 0.38);
+      margin-bottom: 3px;
+    }
+
+    .info-card-val {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold);
+      font-family: "Amiri", serif;
+    }
+
+    /* ===== PATRIARCH TREE ===== */
+    .patriarch-intro {
+      font-family: "Amiri", serif;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(220, 205, 175, 0.7);
+      border-right: 2px solid rgba(212, 175, 55, 0.3);
+      padding-right: 10px;
+    }
+
+    .pope-count-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      border-radius: 6px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      color: var(--gold);
+      font-family: "Amiri", serif;
+    }
+
+    .pope-count-badge span {
+      font-size: 1.3rem;
+      font-weight: 900;
+    }
+
+    .pp-scroll {
+      overflow-x: auto;
+      overflow-y: visible;
+      padding-bottom: 4px;
+      flex-shrink: 0;
+    }
+
+    .pp-scroll::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    .pp-scroll::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    .pp-track {
+      display: flex;
+      align-items: flex-start;
+      gap: 0;
+      position: relative;
+      padding: 10px 0 4px;
+      min-width: max-content;
+    }
+
+    .pp-track::before {
+      content: "";
+      position: absolute;
+      top: 28px;
+      left: 22px;
+      right: 22px;
+      height: 1px;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(212, 175, 55, 0.3) 5%,
+          rgba(212, 175, 55, 0.3) 95%,
+          transparent);
+    }
+
+    .pp-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 88px;
+      cursor: default;
+      position: relative;
+      padding: 0 4px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+    }
+
+    .pp-node.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .pp-node:hover .pp-circle {
+      transform: scale(1.12);
+      border-color: var(--gold);
+    }
+
+    .pp-node:hover .pp-name {
+      color: var(--gold);
+    }
+
+    .pp-circle {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(212, 175, 55, 0.3);
+      background: rgba(212, 175, 55, 0.07);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      font-family: monospace;
+      font-weight: 700;
+      color: var(--gold);
+      transition: all 0.25s;
+      position: relative;
+      z-index: 1;
+      flex-shrink: 0;
+      margin-bottom: 6px;
+    }
+
+    .pp-circle.highlight {
+      background: rgba(212, 175, 55, 0.2);
+      border-color: rgba(212, 175, 55, 0.7);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.25);
+    }
+
+    .pp-circle.key {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: var(--gold);
+      box-shadow: 0 0 14px rgba(212, 175, 55, 0.35);
+    }
+
+    .pp-name {
+      font-family: "Amiri", serif;
+      font-size: 0.72rem;
+      color: rgba(230, 215, 185, 0.85);
+      text-align: center;
+      line-height: 1.3;
+      transition: color 0.2s;
+    }
+
+    .pp-years {
+      font-family: monospace;
+      font-size: 0.55rem;
+      color: rgba(212, 175, 55, 0.4);
+      text-align: center;
+      margin-top: 2px;
+    }
+
+    .pp-note {
+      font-family: "Cairo", sans-serif;
+      font-size: 0.58rem;
+      color: rgba(100, 200, 255, 0.6);
+      text-align: center;
+      margin-top: 2px;
+      line-height: 1.3;
+    }
+
+    .pp-ellipsis {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      padding-top: 8px;
+    }
+
+    .pp-ellipsis span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.2);
+      margin: 2px 0;
+    }
+
+    /* Papal number label above circle */
+    .pp-papal-num {
+      font-family: monospace;
+      font-size: 0.5rem;
+      color: rgba(212, 175, 55, 0.4);
+      text-align: center;
+      margin-bottom: 2px;
+      letter-spacing: 0.03em;
+    }
+
+    /* Gap indicator between non-consecutive patriarchs */
+    .pp-gap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      padding-top: 24px;
+      flex-shrink: 0;
+      gap: 2px;
+      opacity: 0.5;
+    }
+
+    .pp-gap-dots {
+      font-size: 0.7rem;
+      color: rgba(212, 175, 55, 0.3);
+      letter-spacing: 2px;
+    }
+
+    .pp-gap-lbl {
+      font-family: "Cairo", sans-serif;
+      font-size: 0.44rem;
+      color: rgba(212, 175, 55, 0.25);
+      text-align: center;
+      line-height: 1.3;
+      writing-mode: vertical-rl;
+      margin-top: 4px;
+    }
+
+    /* ===== NAV BTNS ===== */
+    .nav-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      padding: 0.7rem 1.2rem 0.8rem;
+      flex-shrink: 0;
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+      margin-top: auto;
+    }
+
+    /* === REFERENCES SECTION === */
+    .refs-box {
+      background: rgba(5, 13, 26, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-right: 3px solid rgba(212, 175, 55, 0.4);
+      border-radius: 6px;
+      padding: 0.8rem 0.8rem 0.8rem 1rem;
+      display: none;
+      flex-shrink: 0;
+    }
+
+    .refs-head {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.62rem;
+      color: rgba(212, 175, 55, 0.7);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    .refs-head svg {
+      flex-shrink: 0;
+    }
+
+    .ref-item {
+      display: flex;
+      gap: 9px;
+      margin-bottom: 8px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+    }
+
+    .ref-item.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .ref-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .ref-tag {
+      min-width: 26px;
+      height: 17px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-family: monospace;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+      letter-spacing: 0.04em;
+    }
+
+    .ref-tag.primary {
+      background: rgba(212, 175, 55, 0.18);
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      color: #d4af37;
+    }
+
+    .ref-tag.secondary {
+      background: rgba(100, 200, 255, 0.1);
+      border: 1px solid rgba(100, 200, 255, 0.3);
+      color: #64c8ff;
+    }
+
+    .ref-tag.tertiary {
+      background: rgba(205, 127, 50, 0.12);
+      border: 1px solid rgba(205, 127, 50, 0.35);
+      color: #cd7f32;
+    }
+
+    .ref-content {
+      flex: 1;
+    }
+
+    .ref-author {
+      font-family: "Amiri", serif;
+      font-size: 0.85rem;
+      color: rgba(240, 230, 210, 0.9);
+      line-height: 1.45;
+      font-weight: 700;
+    }
+
+    .ref-title {
+      font-family: "Amiri", serif;
+      font-size: 0.8rem;
+      color: rgba(212, 175, 55, 0.75);
+      line-height: 1.4;
+      font-style: italic;
+    }
+
+    .ref-detail {
+      font-family: monospace;
+      font-size: 0.6rem;
+      color: rgba(180, 160, 120, 0.5);
+      margin-top: 2px;
+      letter-spacing: 0.03em;
+    }
+
+    /* === REASONS SECTION === */
+    .reasons-box {
+      background: linear-gradient(135deg,
+          rgba(212, 175, 55, 0.05),
+          rgba(205, 127, 50, 0.03));
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      border-radius: 9px;
+      padding: 0.85rem;
+      display: none;
+      flex-shrink: 0;
+    }
+
+    .reasons-head {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.65rem;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+    }
+
+    .reasons-head-icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.15);
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.65rem;
+      flex-shrink: 0;
+    }
+
+    .reason-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 7px;
+      opacity: 0;
+      transform: translateX(10px);
+      transition:
+        opacity 0.4s ease,
+        transform 0.4s ease;
+    }
+
+    .reason-item.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .reason-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .reason-num {
+      min-width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      color: var(--gold);
+      font-weight: 700;
+      font-family: monospace;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .reason-text {
+      font-family: "Amiri", serif;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: rgba(240, 230, 210, 0.85);
+    }
+
+    .founding-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      border-radius: 5px;
+      padding: 3px 9px;
+      font-size: 0.7rem;
+      color: var(--gold);
+      font-family: "Amiri", serif;
+      margin-bottom: 8px;
+    }
+
+    /* === TIMELINE === */
+    #timeline {
+      display: flex;
+      align-items: center;
+      padding: 0 1.5rem;
+      background: rgba(5, 13, 26, 0.95);
+      border-top: 1px solid rgba(212, 175, 55, 0.18);
+      position: relative;
+      z-index: 50;
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    #timeline::-webkit-scrollbar {
+      height: 3px;
+    }
+
+    #timeline::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    #tlTrack {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      position: relative;
+      min-width: 0;
+    }
+
+    #tlLine {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg,
+          transparent,
+          rgba(212, 175, 55, 0.35),
+          rgba(212, 175, 55, 0.35),
+          transparent);
+    }
+
+    #tlNodes {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: pointer;
+      padding: 6px 8px;
+      min-width: 90px;
+      transition: all 0.3s;
+    }
+
+    .tn:hover .nd {
+      background: var(--gold);
+      box-shadow: 0 0 12px var(--gold);
+    }
+
+    .tn:hover .tn-name {
+      color: var(--gold);
+    }
+
+    .tn-year {
+      font-size: 0.58rem;
+      color: rgba(212, 175, 55, 0.45);
+      margin-bottom: 5px;
+      font-family: monospace;
+    }
+
+    .nd {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.3);
+      border: 1.5px solid var(--gold);
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+
+    .nd.active {
+      background: var(--gold);
+      box-shadow:
+        0 0 14px var(--gold),
+        0 0 28px rgba(212, 175, 55, 0.4);
+    }
+
+    .tn-name {
+      font-size: 0.62rem;
+      color: rgba(212, 175, 55, 0.6);
+      margin-top: 5px;
+      text-align: center;
+      line-height: 1.3;
+      max-width: 78px;
+      font-family: "Cairo", sans-serif;
+    }
+
+    .tn-name.active {
+      color: var(--gold);
+    }
+
+    /* === WELCOME OVERLAY === */
+    #welcome {
+      position: fixed;
+      inset: 0;
+      z-index: 500;
+      background: rgba(4, 10, 22, 0.97);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      background-image:
+        linear-gradient(rgba(212, 175, 55, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    .welcome-cross-wrap {
+      position: relative;
+    }
+
+    .w-ring {
+      position: absolute;
+      inset: -20px;
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      border-radius: 50%;
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+
+    .w-ring2 {
+      position: absolute;
+      inset: -38px;
+      border: 1px solid rgba(212, 175, 55, 0.08);
+      border-radius: 50%;
+      animation: ringPulse 3s ease-in-out infinite 0.5s;
+    }
+
+    @keyframes ringPulse {
+
+      0%,
+      100% {
+        transform: scale(0.95);
+        opacity: 0.5;
+      }
+
+      50% {
+        transform: scale(1.05);
+        opacity: 1;
+      }
+    }
+
+    .w-title {
+      font-family: "Amiri", serif;
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-align: center;
+      line-height: 1.45;
+    }
+
+    .w-subtitle {
+      font-family: "Amiri", serif;
+      font-size: 1.05rem;
+      color: rgba(240, 230, 210, 0.65);
+      text-align: center;
+      max-width: 520px;
+      line-height: 1.9;
+    }
+
+    .w-years {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: rgba(212, 175, 55, 0.4);
+      font-size: 0.8rem;
+    }
+
+    .w-line {
+      height: 1px;
+      width: 90px;
+      background: linear-gradient(90deg,
+          transparent,
+          var(--gold),
+          transparent);
+    }
+
+    .w-footer {
+      font-size: 0.6rem;
+      color: rgba(212, 175, 55, 0.25);
+      letter-spacing: 0.14em;
+      font-family: monospace;
+      margin-top: 6px;
+    }
+
+    /* === TEAM BUTTON === */
+    .btn-team {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212, 175, 55, 0.08);
+      color: var(--gold);
+      font-family: "Cairo", sans-serif;
+      font-weight: 600;
+      padding: 0.42rem 1rem;
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.22s;
+      white-space: nowrap;
+    }
+
+    .btn-team:hover {
+      background: rgba(212, 175, 55, 0.15);
+      border-color: rgba(212, 175, 55, 0.6);
+    }
+
+    /* === TEAM MODAL === */
+    #teamOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2000;
+      background: rgba(2, 6, 14, 0.88);
+      backdrop-filter: blur(14px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    #teamOverlay.open {
+      display: flex;
+    }
+
+    #teamBox {
+      background: linear-gradient(145deg, #071525, #040d1c);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 780px;
+      max-height: 88vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow:
+        0 0 80px rgba(212, 175, 55, 0.08),
+        0 0 0 1px rgba(212, 175, 55, 0.1);
+      animation: teamIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    #teamBox::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    #teamBox::-webkit-scrollbar-thumb {
+      background: rgba(212, 175, 55, 0.2);
+    }
+
+    @keyframes teamIn {
+      from {
+        opacity: 0;
+        transform: scale(0.93) translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .team-header {
+      padding: 1.6rem 1.8rem 1.2rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.12);
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      background: inherit;
+      z-index: 5;
+      backdrop-filter: blur(20px);
+    }
+
+    .team-header-title {
+      font-family: "Amiri", serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.2;
+    }
+
+    .team-header-sub {
+      font-size: 0.65rem;
+      color: rgba(212, 175, 55, 0.4);
+      letter-spacing: 0.1em;
+      font-family: monospace;
+      margin-top: 3px;
+    }
+
+    .team-close {
+      background: rgba(212, 175, 55, 0.08);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+      color: rgba(212, 175, 55, 0.6);
+      font-size: 1rem;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .team-close:hover {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold);
+    }
+
+    .team-coptic-cross {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.8rem 1.8rem;
+      border-bottom: 1px solid rgba(212, 175, 55, 0.08);
+    }
+
+    .team-project-label {
+      font-family: "Amiri", serif;
+      font-size: 0.95rem;
+      color: rgba(220, 205, 175, 0.65);
+      line-height: 1.6;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      padding: 1.2rem 1.8rem 1.4rem;
+      background: transparent;
+    }
+
+    .team-card {
+      background: linear-gradient(160deg, #071525, #040e1c);
+      border: 1px solid rgba(212, 175, 55, 0.13);
+      border-radius: 12px;
+      padding: 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: all 0.25s;
+      cursor: default;
+      position: relative;
+    }
+
+    .team-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: linear-gradient(135deg,
+          rgba(212, 175, 55, 0.06),
+          transparent 60%);
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .team-card:hover {
+      border-color: rgba(212, 175, 55, 0.35);
+      transform: translateY(-3px);
+      box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(212, 175, 55, 0.1);
+    }
+
+    .team-card:hover::after {
+      opacity: 1;
+    }
+
+    /* Photo area */
+    .tc-photo-wrap {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0a1e38, #061020);
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .tc-photo-wrap img.tc-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+      transition: transform 0.4s ease;
+    }
+
+    .tc-photo-wrap img.tc-photo.loaded {
+      display: block;
+    }
+
+    .team-card:hover .tc-photo {
+      transform: scale(1.05);
+    }
+
+    .tc-photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .tc-initials {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(212, 175, 55, 0.1);
+      border: 1.5px solid rgba(212, 175, 55, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Amiri", serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .tc-upload-hint {
+      font-size: 0.55rem;
+      color: rgba(212, 175, 55, 0.28);
+      font-family: "Cairo", sans-serif;
+      text-align: center;
+    }
+
+    /* upload overlay on hover */
+    .tc-upload-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(3, 9, 20, 0.7);
+      opacity: 0;
+      transition: opacity 0.2s;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .tc-upload-overlay svg {
+      filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.5));
+    }
+
+    .team-card:hover .tc-upload-overlay {
+      opacity: 1;
+    }
+
+    /* Info area */
+    .tc-info {
+      width: 100%;
+      padding: 0.7rem 0.7rem 0.65rem;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      border-top: 1px solid rgba(212, 175, 55, 0.1);
+    }
+
+    .tc-name {
+      font-family: "Amiri", serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: rgba(240, 228, 205, 0.95);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .tc-name.placeholder {
+      color: rgba(212, 175, 55, 0.28);
+      font-style: italic;
+      font-size: 0.78rem;
+    }
+
+    .tc-id {
+      font-family: monospace;
+      font-size: 0.58rem;
+      color: rgba(212, 175, 55, 0.45);
+      text-align: center;
+      letter-spacing: 0.08em;
+    }
+
+    .tc-id.placeholder {
+      color: rgba(212, 175, 55, 0.18);
+    }
+
+    .tc-role {
+      font-size: 0.62rem;
+      color: rgba(212, 175, 55, 0.5);
+      font-family: "Cairo", sans-serif;
+      text-align: center;
+      line-height: 1.35;
+      margin-top: 1px;
+    }
+
+    .tc-role.placeholder {
+      color: rgba(212, 175, 55, 0.16);
+    }
+
+    .team-footer {
+      padding: 1rem 1.8rem;
+      border-top: 1px solid rgba(212, 175, 55, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .team-footer-note {
+      font-family: "Amiri", serif;
+      font-size: 0.82rem;
+      color: rgba(212, 175, 55, 0.35);
+    }
+
+    @keyframes blink {
+
+      0%,
+      49% {
+        opacity: 1;
+      }
+
+      50%,
+      100% {
+        opacity: 0;
+      }
+    }
+
+    /* ================================================================
+         RESPONSIVE SYSTEM
+         Breakpoints:
+           lg  > 1024px  — desktop (default styles above)
+           md  641–1024px — tablet / landscape phone
+           sm  ≤ 640px   — phone portrait
+           xs  ≤ 380px   — small phone
+         Panel width tiers (JS mirrors these):
+           > 1024  → clamp(440px, 38vw, 720px)
+           901–1024 → clamp(380px, 45vw, 520px)
+           641–900 → clamp(300px, 58vw, 460px)
+           ≤ 640   → 100vw  (full-screen overlay, slides from right)
+      ================================================================ */
+
+    /* ── Large tablet / small laptop (901–1024px) ── */
+    @media (max-width: 1024px) and (min-width: 901px) {
+      .coords-disp {
+        display: none !important;
+      }
+
+      .hdr-status {
+        display: none !important;
+      }
+
+      /* Panel content */
+      .panel-title {
+        font-size: 1.35rem;
+      }
+
+      .img-wrap {
+        height: 200px;
+      }
+
+      .tab-btn {
+        padding: 0.48rem 0.85rem;
+        font-size: 0.73rem;
+      }
+
+      /* Team grid: 3 cols */
+      .team-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      /* Timeline */
+      .tn {
+        min-width: 80px;
+      }
+
+      .tn-name {
+        font-size: 0.58rem;
+      }
+    }
+
+    /* ── Tablet portrait / landscape phone (641–900px) ── */
+    @media (max-width: 900px) and (min-width: 641px) {
+      .coords-disp {
+        display: none !important;
+      }
+
+      .hdr-status {
+        display: none !important;
+      }
+
+      .hdr-sub {
+        display: none !important;
+      }
+
+      #hdr {
+        padding: 0 1rem;
+      }
+
+      /* Panel content */
+      .panel-title {
+        font-size: 1.25rem;
+      }
+
+      .img-wrap {
+        height: 190px;
+      }
+
+      .tab-btn {
+        padding: 0.44rem 0.72rem;
+        font-size: 0.7rem;
+      }
+
+      /* Info grid: single col on narrow panel */
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      /* Team modal */
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+
+      #teamOverlay {
+        padding: 1rem;
+      }
+
+      /* Timeline */
+      .tn {
+        min-width: 72px;
+      }
+
+      .tn-name {
+        font-size: 0.55rem;
+        max-width: 68px;
+      }
+
+      /* Header buttons */
+      .btn-team {
+        padding: 0.36rem 0.85rem;
+        font-size: 0.78rem;
+      }
+
+      .btn-gold {
+        padding: 0.38rem 1rem;
+        font-size: 0.8rem;
+      }
+    }
+
+    /* ── Mobile portrait (≤ 640px) — panel becomes full-screen overlay ── */
+    @media (max-width: 640px) {
+
+      /* App grid: shorter header + smaller timeline */
+      #app {
+        grid-template-rows: 52px 1fr 62px;
+      }
+
+      /* ── Header ── */
+      #hdr {
+        padding: 0 0.6rem;
+      }
+
+      .hdr-logo svg {
+        width: 26px;
+        height: 26px;
+        flex-shrink: 0;
+      }
+
+      .hdr-title {
+        font-size: 0.8rem;
+      }
+
+      .hdr-sub {
+        display: none !important;
+      }
+
+      .hdr-right {
+        gap: 7px;
+      }
+
+      .hdr-live-wrap {
+        display: none !important;
+      }
+
+      .btn-team {
+        padding: 0.28rem 0.6rem;
+        font-size: 0.7rem;
+        gap: 4px;
+      }
+
+      .btn-team svg {
+        width: 12px;
+        height: 12px;
+      }
+
+      .btn-gold {
+        padding: 0.3rem 0.7rem;
+        font-size: 0.74rem;
+      }
+
+      /* ── Side Panel — full-width overlay on mobile (JS sets width/height/top) ── */
+      #sidePanel {
+        border-left: none !important;
+        border-top: 1px solid rgba(212, 175, 55, 0.25) !important;
+      }
+
+      /* Panel internal sizing */
+      .panel-title {
+        font-size: 1.15rem;
+      }
+
+      .panel-hdr {
+        padding: 0.5rem 1rem 0;
+      }
+
+      .panel-topbar {
+        padding: 0.7rem 1rem 0;
+      }
+
+      .tab-bar {
+        padding: 0 1rem;
+      }
+
+      .tab-btn {
+        padding: 0.42rem 0.6rem;
+        font-size: 0.68rem;
+      }
+
+      .tab-pane {
+        padding: 0.7rem 1rem 0.9rem;
+      }
+
+      .img-wrap {
+        height: 170px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+      }
+
+      /* Nav buttons */
+      .nav-btns {
+        padding: 0.55rem 1rem 0.65rem;
+        gap: 7px;
+      }
+
+      .btn-gold,
+      .btn-outline {
+        font-size: 0.78rem;
+        padding: 0.38rem 0.7rem;
+      }
+
+      /* ── Map area ── */
+      #egyptSvg {
+        max-height: calc(100vh - 114px);
+      }
+
+      .map-label-tr {
+        display: none;
+      }
+
+      .map-counter {
+        bottom: 7px;
+        right: 8px;
+      }
+
+      .counter-val {
+        font-size: 1.3rem;
+      }
+
+      .counter-lbl {
+        font-size: 0.55rem;
+      }
+
+      /* ── HUD corners ── */
+      .hud {
+        width: 34px;
+        height: 34px;
+      }
+
+      .hud::before {
+        height: 13px;
+      }
+
+      .hud::after {
+        width: 13px;
+      }
+
+      /* ── Reset btn ── */
+      #resetBtn {
+        font-size: 0.66rem;
+        padding: 0.22rem 0.65rem;
+        top: 10px;
+      }
+
+      /* ── Timeline ── */
+      #timeline {
+        padding: 0 0.35rem;
+      }
+
+      .tn {
+        min-width: 58px;
+        padding: 4px 3px;
+      }
+
+      .tn-year {
+        font-size: 0.46rem;
+        margin-bottom: 3px;
+      }
+
+      .tn-name {
+        font-size: 0.48rem;
+        max-width: 54px;
+        margin-top: 3px;
+      }
+
+      .nd {
+        width: 9px;
+        height: 9px;
+      }
+
+      /* ── Welcome overlay ── */
+      #welcome {
+        gap: 0.8rem;
+        padding: 1.1rem;
+      }
+
+      .w-title {
+        font-size: 1.45rem;
+      }
+
+      .w-subtitle {
+        font-size: 0.8rem;
+        max-width: 100%;
+      }
+
+      .w-line {
+        width: 50px;
+      }
+
+      .w-ring {
+        inset: -10px;
+      }
+
+      .w-ring2 {
+        inset: -24px;
+      }
+
+      /* ── Team modal ── */
+      #teamOverlay {
+        padding: 0.65rem;
+      }
+
+      #teamBox {
+        border-radius: 12px;
+      }
+
+      .team-header {
+        padding: 1rem 1rem 0.75rem;
+      }
+
+      .team-header-title {
+        font-size: 1.05rem;
+      }
+
+      .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 0.8rem 0.9rem 1rem;
+      }
+
+      .team-footer {
+        padding: 0.65rem 0.9rem;
+        flex-direction: column;
+        gap: 6px;
+        align-items: flex-start;
+      }
+
+      .team-footer-note {
+        font-size: 0.75rem;
+      }
+
+      .tc-name {
+        font-size: 0.82rem;
+      }
+
+      .tc-role {
+        font-size: 0.58rem;
+      }
+    }
+
+    /* ── Very small phones (≤ 380px) ── */
+    @media (max-width: 380px) {
+      #app {
+        grid-template-rows: 48px 1fr 58px;
+      }
+
+      .hdr-title {
+        font-size: 0.72rem;
+      }
+
+      .btn-gold {
+        font-size: 0.68rem;
+        padding: 0.26rem 0.55rem;
+      }
+
+      .btn-team {
+        font-size: 0.65rem;
+        padding: 0.24rem 0.5rem;
+      }
+
+      .hdr-logo svg {
+        width: 22px;
+        height: 22px;
+      }
+
+      .tn {
+        min-width: 50px;
+      }
+
+      .tn-name {
+        font-size: 0.42rem;
+        max-width: 48px;
+      }
+
+      .tn-year {
+        font-size: 0.42rem;
+      }
+
+      .panel-title {
+        font-size: 1rem;
+      }
+
+      .img-wrap {
+        height: 150px;
+      }
+
+      .tab-btn {
+        font-size: 0.62rem;
+        padding: 0.38rem 0.5rem;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+        padding: 0.65rem 0.75rem 0.85rem;
+      }
+
+      .w-title {
+        font-size: 1.2rem;
+      }
+
+      .w-subtitle {
+        font-size: 0.74rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="gridBg"></div>
+  <div id="vignette"></div>
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- APP -->
+  <div id="app">
+    <!-- HEADER -->
+    <header id="hdr">
+      <div class="hdr-logo">
+        <svg width="38" height="38" viewBox="0 0 38 38">
+          <circle cx="19" cy="19" r="17" fill="none" stroke="#d4af37" stroke-width="1.5" opacity="0.7" />
+          <circle cx="19" cy="19" r="11" fill="none" stroke="#d4af37" stroke-width="0.8" opacity="0.35" />
+          <line x1="19" y1="3" x2="19" y2="35" stroke="#d4af37" stroke-width="2.2" />
+          <line x1="3" y1="19" x2="35" y2="19" stroke="#d4af37" stroke-width="2.2" />
+          <circle cx="19" cy="19" r="3.5" fill="#d4af37" />
+          <circle cx="19" cy="4.5" r="2.8" fill="#d4af37" />
+          <circle cx="19" cy="33.5" r="2.8" fill="#d4af37" />
+          <circle cx="4.5" cy="19" r="2.8" fill="#d4af37" />
+          <circle cx="33.5" cy="19" r="2.8" fill="#d4af37" />
+        </svg>
+        <div>
+          <div class="hdr-title">المقرات البابوية القبطية</div>
+          <div class="hdr-sub">
+            COPTIC PAPAL HQ &nbsp;•&nbsp; INTERACTIVE HISTORICAL EXHIBIT
+          </div>
+        </div>
+      </div>
+      <div class="hdr-right">
+        <span class="coords-disp" id="coordsDisp">30°03'N&nbsp;&nbsp;31°13'E</span>
+        <div class="hdr-live-wrap" style="display: flex; align-items: center; gap: 6px">
+          <div class="live-dot"></div>
+          <span class="hdr-status">نظام تفاعلي&nbsp;—&nbsp;مباشر</span>
+        </div>
+        <button class="btn-team" onclick="openTeam()">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" style="flex-shrink: 0">
+            <circle cx="5" cy="4.5" r="2.2" stroke="currentColor" stroke-width="1.2" />
+            <path d="M1 12.5c0-2.2 1.8-4 4-4s4 1.8 4 4" stroke="currentColor" stroke-width="1.2"
+              stroke-linecap="round" />
+            <circle cx="11" cy="4.5" r="1.7" stroke="currentColor" stroke-width="1.1" opacity="0.7" />
+            <path d="M11 8.5c1.7 0 3 1.2 3 3" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"
+              opacity="0.7" />
+          </svg>
+          الفريق
+        </button>
+        <button class="btn-gold" onclick="selectLocation(0)">
+          ابدأ الرحلة ←
+        </button>
+      </div>
+    </header>
+
+    <!-- MAP SECTION -->
+    <div id="mapSection">
+      <div class="hud tl"></div>
+      <div class="hud tr"></div>
+      <div class="hud bl"></div>
+      <div class="hud br"></div>
+      <button id="resetBtn" onclick="resetMap()">↺ عرض الخريطة كاملة</button>
+
+      <div class="map-label map-label-tr">
+        <div style="
+              font-size: 0.6rem;
+              color: rgba(212, 175, 55, 0.35);
+              margin-bottom: 2px;
+            ">
+          جمهورية مصر العربية
+        </div>
+        <div style="
+              font-family: monospace;
+              font-size: 0.6rem;
+              color: rgba(212, 175, 55, 0.25);
+            ">
+          EGYPT • SCALE 1:2,400,000
+        </div>
+      </div>
+      <div class="map-counter">
+        <div class="counter-lbl">المقرات المكتشفة</div>
+        <div class="counter-val" id="visitCounter">٠/٧</div>
+      </div>
+
+      <!-- EGYPT SVG MAP — Geographically accurate (lon 24.5–37.5°E, lat 21.5–32.0°N) -->
+      <!--  x(lon) = (lon−24.5)×38.46   y(lat) = (32.0−lat)×55.24  -->
+      <svg id="egyptSvg" viewBox="0 0 500 580" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="glow1" x="-60%" y="-60%" width="220%" height="220%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="b" />
+            <feMerge>
+              <feMergeNode in="b" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <filter id="glow2" x="-80%" y="-80%" width="260%" height="260%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b" />
+            <feMerge>
+              <feMergeNode in="b" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          <radialGradient id="mapBg" cx="40%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#0c1e36" />
+            <stop offset="100%" stop-color="#030a14" />
+          </radialGradient>
+          <linearGradient id="nileGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#1a4a6e" />
+            <stop offset="100%" stop-color="#3a9ad9" stop-opacity="0.85" />
+          </linearGradient>
+          <linearGradient id="medGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+            <stop offset="0%" stop-color="#0d2035" stop-opacity="0.5" />
+            <stop offset="100%" stop-color="#1a4a7a" stop-opacity="0.7" />
+          </linearGradient>
+          <linearGradient id="redseaGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#0d2535" stop-opacity="0.6" />
+            <stop offset="100%" stop-color="#1a3a52" stop-opacity="0.4" />
+          </linearGradient>
+          <pattern id="mapGrid" width="38.46" height="55.24" patternUnits="userSpaceOnUse">
+            <path d="M 38.46 0 L 0 0 0 55.24" fill="none" stroke="rgba(212,175,55,0.055)" stroke-width="0.35" />
+          </pattern>
+          <!-- Egypt land clip including Sinai -->
+          <clipPath id="egyptClip">
+            <path d="M 19,28 C 58,24 107,35 158,62 C 185,48 209,43 216,37 C 229,30 282,31 301,42
+                   C 328,47 358,49 375,39 C 385,63 393,99 400,138 C 398,177 389,205 367,236
+                   C 342,224 329,185 314,119 C 327,155 346,248 369,303 C 396,358 423,425 454,485
+                   L 476,552 L 19,552 Z" />
+          </clipPath>
+          <radialGradient id="cairoGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(212,175,55,0.18)" />
+            <stop offset="100%" stop-color="rgba(212,175,55,0)" />
+          </radialGradient>
+          <radialGradient id="alexGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="rgba(212,175,55,0.12)" />
+            <stop offset="100%" stop-color="rgba(212,175,55,0)" />
+          </radialGradient>
+          <radialGradient id="nassrGrad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#1a5577" stop-opacity="0.7" />
+            <stop offset="100%" stop-color="#0d2535" stop-opacity="0.3" />
+          </radialGradient>
+          <!-- Sand/desert texture -->
+          <filter id="desertFx">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch" result="noise" />
+            <feColorMatrix type="saturate" values="0" in="noise" result="grayNoise" />
+            <feBlend in="SourceGraphic" in2="grayNoise" mode="overlay" result="blend" />
+            <feComposite in="blend" in2="SourceGraphic" operator="in" />
+          </filter>
+        </defs>
+
+        <!-- === SKY / SEA BACKGROUND === -->
+        <rect width="500" height="580" fill="url(#mapBg)" />
+        <rect width="500" height="580" fill="url(#mapGrid)" />
+
+        <!-- Mediterranean Sea (north of Egypt) -->
+        <path d="M 0,0 L 500,0 L 500,60 Q 400,50 375,39 Q 350,48 301,42 Q 250,32 209,43
+               Q 190,47 158,62 Q 107,35 19,28 L 0,28 Z" fill="url(#medGrad)" opacity="0.85" />
+        <text x="145" y="18" fill="rgba(100,170,240,0.45)" font-family="Cairo,sans-serif" font-size="8"
+          text-anchor="middle" font-style="italic">
+          البحر الأبيض المتوسط
+        </text>
+
+        <!-- Red Sea (east of mainland, between Sinai & Arabia) -->
+        <path d="M 310,112 C 323,140 340,200 360,260 Q 380,320 405,380 Q 430,440 455,490 L 476,552
+               L 500,552 L 500,90 Q 470,80 450,100 Q 430,140 420,170 Q 408,200 395,230
+               Q 380,260 367,236 C 342,224 329,185 314,119 Z" fill="url(#redseaGrad)" opacity="0.55" />
+
+        <!-- Gulf of Suez -->
+        <path d="M 310,112 C 313,120 315,130 314,119 C 325,148 338,185 342,224
+               L 367,236 C 355,222 340,205 332,185 C 322,162 315,135 310,112 Z" fill="rgba(13,40,70,0.5)" />
+
+        <!-- Gulf of Aqaba -->
+        <path d="M 400,138 C 399,160 397,175 398,177 C 391,200 380,218 367,236
+               Q 375,220 387,200 Q 396,175 400,138 Z" fill="rgba(13,40,70,0.35)" />
+
+        <text x="435" y="310" fill="rgba(100,170,240,0.38)" font-family="Cairo,sans-serif" font-size="7"
+          text-anchor="middle" font-style="italic" transform="rotate(-72,435,310)">
+          البحر الأحمر
+        </text>
+
+        <!-- MAP GROUP — GSAP animates translate+scale -->
+        <g id="mapGroup">
+          <!-- === EGYPT LAND BODY === -->
+          <!-- Main body (west of Suez Canal including Delta) -->
+          <path id="egyptBody" d="M 19,28
+             C 58,24 107,35 158,62
+             C 185,48 209,43 216,37
+             C 229,30 255,28 282,31
+             L 301,42
+             C 310,50 310,112 310,112
+             C 327,155 346,248 369,303
+             C 396,358 423,425 454,485
+             L 476,552
+             L 19,552 Z" fill="#071828" stroke="rgba(212,175,55,0.7)" stroke-width="1.2" stroke-linejoin="round" />
+
+          <!-- Sinai Peninsula — separate path -->
+          <path id="sinaiBody" d="M 301,42
+             C 328,47 358,49 375,39
+             C 385,63 393,99 400,138
+             C 398,177 389,205 367,236
+             C 342,224 329,185 314,119
+             C 310,112 310,112 301,42 Z" fill="#081a2c" stroke="rgba(212,175,55,0.55)" stroke-width="1.0"
+            stroke-linejoin="round" />
+
+          <!-- === INTERNAL GEOGRAPHIC DETAIL === -->
+
+          <!-- Desert topography texture (subtle) -->
+          <g clip-path="url(#egyptClip)" opacity="0.045">
+            <!-- latitude lines (every 2°) -->
+            <line x1="0" y1="110" x2="500" y2="110" stroke="#d4af37" stroke-width="0.6" />
+            <!-- 30°N -->
+            <line x1="0" y1="221" x2="500" y2="221" stroke="#d4af37" stroke-width="0.5" />
+            <!-- 28°N -->
+            <line x1="0" y1="331" x2="500" y2="331" stroke="#d4af37" stroke-width="0.5" />
+            <!-- 26°N -->
+            <line x1="0" y1="442" x2="500" y2="442" stroke="#d4af37" stroke-width="0.5" />
+            <!-- 24°N -->
+            <!-- longitude lines (every 2°) -->
+            <line x1="96" y1="0" x2="96" y2="580" stroke="#d4af37" stroke-width="0.5" />
+            <!-- 27°E -->
+            <line x1="173" y1="0" x2="173" y2="580" stroke="#d4af37" stroke-width="0.5" />
+            <!-- 29°E -->
+            <line x1="250" y1="0" x2="250" y2="580" stroke="#d4af37" stroke-width="0.5" />
+            <!-- 31°E -->
+            <line x1="327" y1="0" x2="327" y2="580" stroke="#d4af37" stroke-width="0.5" />
+            <!-- 33°E -->
+            <line x1="404" y1="0" x2="404" y2="580" stroke="#d4af37" stroke-width="0.5" />
+            <!-- 35°E -->
+          </g>
+
+          <!-- === NILE RIVER SYSTEM === -->
+          <!-- Main Nile (Aswan → Cairo): accurate course with bends -->
+          <!-- Aswan (32.9°E,24.1°N)=(323,436) Luxor(32.64,25.7)=(312,348) -->
+          <!-- Qena bend(32.72,26.2)=(315,320) Sohag(31.7,26.56)=(276,302) -->
+          <!-- Asyut(31.18,27.18)=(257,267) Minya(30.75,28.1)=(241,216) -->
+          <!-- Beni Suef(31.1,29.08)=(253,162) Cairo(31.23,30.05)=(258,108) -->
+          <path d="M 323,436 C 322,420 318,400 315,348
+                 C 315,330 315,320 305,308 C 290,292 276,302 268,290
+                 C 260,278 257,267 252,245 C 245,228 241,216 240,196
+                 C 239,178 245,168 253,162 C 256,148 258,130 258,108" fill="none" stroke="url(#nileGrad)"
+            stroke-width="3.2" opacity="0.8" stroke-linecap="round" stroke-linejoin="round" />
+          <!-- Nile glow -->
+          <path d="M 323,436 C 322,420 318,400 315,348
+                 C 315,330 315,320 305,308 C 290,292 276,302 268,290
+                 C 260,278 257,267 252,245 C 245,228 241,216 240,196
+                 C 239,178 245,168 253,162 C 256,148 258,130 258,108" fill="none" stroke="#2980b9" stroke-width="6"
+            opacity="0.12" stroke-linecap="round" />
+
+          <!-- Delta: Rosetta branch (west) → Alexandria area -->
+          <!-- Rosetta mouth (30.42°E,31.4°N)=(229,33) -->
+          <path d="M 258,108 C 254,95 248,72 240,58 C 234,48 229,38 229,33" fill="none" stroke="url(#nileGrad)"
+            stroke-width="2.0" opacity="0.65" />
+          <!-- Delta: Damietta branch (east) -->
+          <!-- Damietta (31.8°E,31.43°N)=(282,31) -->
+          <path d="M 258,108 C 262,92 268,72 272,56 C 276,42 280,34 282,31" fill="none" stroke="url(#nileGrad)"
+            stroke-width="1.6" opacity="0.55" />
+          <!-- Delta fill (triangle) -->
+          <path d="M 229,33 L 282,31 L 258,108 Z" fill="rgba(30,90,130,0.1)" stroke="none" />
+          <!-- Delta dotted outline -->
+          <path d="M 229,33 L 282,31 L 258,108 Z" fill="none" stroke="rgba(41,128,185,0.15)" stroke-width="0.6"
+            stroke-dasharray="3,3" />
+
+          <!-- === LAKE NASSER === -->
+          <!-- Extends ~22.5°N–24°N, ~32°E–33°E. Center (32.5°E,23.3°N)=(307,481) -->
+          <ellipse cx="318" cy="484" rx="16" ry="48" fill="url(#nassrGrad)" stroke="rgba(41,128,185,0.28)"
+            stroke-width="0.9" opacity="0.9" />
+          <!-- Aswan Dam marker -->
+          <rect x="310" y="434" width="18" height="4" fill="rgba(212,175,55,0.25)" rx="1" />
+          <text x="319" y="430" fill="rgba(212,175,55,0.35)" font-family="Cairo,sans-serif" font-size="4.5"
+            text-anchor="middle">
+            السد العالي
+          </text>
+
+          <!-- === SUEZ CANAL === -->
+          <!-- From Port Said (301,42) to Suez (310,112) -->
+          <path d="M 301,42 C 302,58 304,75 306,90 C 308,100 309,106 310,112" fill="none" stroke="rgba(100,190,255,0.5)"
+            stroke-width="1.8" stroke-dasharray="4,2" opacity="0.8" />
+          <text x="298" y="76" fill="rgba(100,190,255,0.35)" font-family="Cairo,sans-serif" font-size="4.5"
+            text-anchor="end">
+            قناة السويس
+          </text>
+
+          <!-- === GEOGRAPHIC LABELS === -->
+          <text x="108" y="330" fill="rgba(212,175,55,0.11)" font-family="Cairo,sans-serif" font-size="12"
+            text-anchor="middle">
+            الصحراء الغربية
+          </text>
+          <text x="300" y="260" fill="rgba(212,175,55,0.08)" font-family="Cairo,sans-serif" font-size="9"
+            text-anchor="middle">
+            الصحراء الشرقية
+          </text>
+          <text x="358" y="130" fill="rgba(212,175,55,0.14)" font-family="Cairo,sans-serif" font-size="8.5"
+            text-anchor="middle">
+            سيناء
+          </text>
+          <text x="319" y="498" fill="rgba(100,180,230,0.25)" font-family="Cairo,sans-serif" font-size="5.5"
+            text-anchor="middle">
+            بحيرة ناصر
+          </text>
+          <!-- Lat/Lon tick labels -->
+          <text x="19" y="116" fill="rgba(212,175,55,0.2)" font-family="monospace" font-size="4" text-anchor="start">
+            30°N
+          </text>
+          <text x="19" y="221" fill="rgba(212,175,55,0.2)" font-family="monospace" font-size="4" text-anchor="start">
+            28°N
+          </text>
+          <text x="19" y="331" fill="rgba(212,175,55,0.2)" font-family="monospace" font-size="4" text-anchor="start">
+            26°N
+          </text>
+          <text x="19" y="442" fill="rgba(212,175,55,0.2)" font-family="monospace" font-size="4" text-anchor="start">
+            24°N
+          </text>
+          <text x="173" y="575" fill="rgba(212,175,55,0.2)" font-family="monospace" font-size="4" text-anchor="middle">
+            29°E
+          </text>
+          <text x="250" y="575" fill="rgba(212,175,55,0.2)" font-family="monospace" font-size="4" text-anchor="middle">
+            31°E
+          </text>
+          <text x="327" y="575" fill="rgba(212,175,55,0.2)" font-family="monospace" font-size="4" text-anchor="middle">
+            33°E
+          </text>
+
+          <!-- === CAIRO REGION HIGHLIGHT === -->
+          <ellipse cx="263" cy="110" rx="52" ry="40" fill="url(#cairoGlow)" opacity="0.6" />
+          <rect x="243" y="93" width="68" height="36" fill="none" stroke="rgba(212,175,55,0.14)" stroke-width="0.7"
+            stroke-dasharray="3,2" rx="4" />
+          <text x="277" y="90" fill="rgba(212,175,55,0.3)" font-family="Cairo,sans-serif" font-size="5"
+            text-anchor="middle">
+            منطقة القاهرة الكبرى
+          </text>
+
+          <!-- Alexandria glow -->
+          <ellipse cx="209" cy="44" rx="30" ry="22" fill="url(#alexGlow)" opacity="0.7" />
+
+          <!-- Connections between Cairo markers -->
+          <g opacity="0.2" stroke="#d4af37" stroke-width="0.5" stroke-dasharray="2,2" fill="none">
+            <line x1="258" y1="110" x2="259" y2="108" />
+            <line x1="259" y1="108" x2="259" y2="109" />
+            <line x1="259" y1="109" x2="258" y2="107" />
+            <line x1="258" y1="107" x2="260" y2="107" />
+            <line x1="260" y1="107" x2="279" y2="110" stroke="#64c8ff" />
+          </g>
+
+          <!-- ===== MARKERS (geographically placed) ===== -->
+          <!-- Coordinate system: x=(lon−24.5)×38.46  y=(32.0−lat)×55.24 -->
+
+          <!-- 1. Alexandria — 29.92°E, 31.2°N → (209, 44) -->
+          <g class="mk" id="mk-alexandria" onclick="selectLocation(0)">
+            <circle cx="209" cy="44" r="22" fill="rgba(212,175,55,0.06)" class="pulse1"
+              style="transform-origin: 209px 44px" />
+            <circle cx="209" cy="44" r="14" fill="rgba(212,175,55,0.1)" class="pulse2"
+              style="transform-origin: 209px 44px" />
+            <!-- Outer ring with star shape -->
+            <circle cx="209" cy="44" r="10" fill="rgba(212,175,55,0.18)" stroke="#d4af37" stroke-width="2"
+              class="mk-core" />
+            <!-- Number badge -->
+            <text x="209" y="47.5" fill="#d4af37" font-family="Cairo,sans-serif" font-size="8" text-anchor="middle"
+              font-weight="900">
+              ١
+            </text>
+            <!-- Color dot -->
+            <circle cx="209" cy="44" r="3.5" fill="#d4af37" filter="url(#glow1)" opacity="0" />
+            <!-- Label -->
+            <text x="209" y="29" fill="#d4af37" font-family="Cairo,sans-serif" font-size="7.5" text-anchor="middle"
+              font-weight="700">
+              الإسكندرية
+            </text>
+            <text x="209" y="21" fill="rgba(212,175,55,0.55)" font-family="monospace" font-size="5"
+              text-anchor="middle">
+              42 AD
+            </text>
+            <!-- Category tag -->
+            <rect x="191" y="57" width="36" height="7" rx="2" fill="rgba(212,175,55,0.15)" stroke="rgba(212,175,55,0.4)"
+              stroke-width="0.5" />
+            <text x="209" y="63" fill="rgba(212,175,55,0.8)" font-family="monospace" font-size="4.2"
+              text-anchor="middle">
+              أول مقر
+            </text>
+          </g>
+
+          <!-- 2. Fustat / Old Cairo — 31.23°E, 30.0°N → (258, 110) -->
+          <g class="mk" id="mk-fustat" onclick="selectLocation(1)">
+            <circle cx="258" cy="110" r="20" fill="rgba(224,120,48,0.06)" class="pulse1"
+              style="transform-origin: 258px 110px; animation-delay: 0.6s" />
+            <circle cx="258" cy="110" r="13" fill="rgba(224,120,48,0.09)" class="pulse2"
+              style="transform-origin: 258px 110px; animation-delay: 1.1s" />
+            <circle cx="258" cy="110" r="9" fill="rgba(224,120,48,0.22)" stroke="#e07830" stroke-width="2"
+              class="mk-core" />
+            <text x="258" y="113.5" fill="#e07830" font-family="Cairo,sans-serif" font-size="8" text-anchor="middle"
+              font-weight="900">
+              ٢
+            </text>
+            <text x="244" y="124" fill="#e07830" font-family="Cairo,sans-serif" font-size="6.5" text-anchor="end"
+              font-weight="700">
+              الفسطاط
+            </text>
+            <rect x="228" y="126" width="24" height="7" rx="2" fill="rgba(224,120,48,0.15)"
+              stroke="rgba(224,120,48,0.4)" stroke-width="0.5" />
+            <text x="240" y="132" fill="rgba(224,120,48,0.9)" font-family="monospace" font-size="4.2"
+              text-anchor="middle">
+              641 م
+            </text>
+          </g>
+
+          <!-- 3. Haret Zuweila — 31.25°E, 30.05°N → (259, 108) -->
+          <g class="mk" id="mk-zuweila" onclick="selectLocation(2)">
+            <circle cx="259" cy="108" r="16" fill="rgba(32,185,145,0.06)" class="pulse1"
+              style="transform-origin: 259px 108px; animation-delay: 1s" />
+            <circle cx="259" cy="108" r="10" fill="rgba(32,185,145,0.09)" class="pulse2"
+              style="transform-origin: 259px 108px; animation-delay: 1.4s" />
+            <!-- Diamond shape for visual distinction -->
+            <polygon points="259,100 265,108 259,116 253,108" fill="rgba(32,185,145,0.22)" stroke="#20b991"
+              stroke-width="1.8" class="mk-core" />
+            <text x="259" y="111.5" fill="#20b991" font-family="Cairo,sans-serif" font-size="7.5" text-anchor="middle"
+              font-weight="900">
+              ٣
+            </text>
+            <text x="273" y="104" fill="#20b991" font-family="Cairo,sans-serif" font-size="6" text-anchor="start"
+              font-weight="700">
+              ح. زويلة
+            </text>
+            <rect x="273" y="106" width="22" height="7" rx="2" fill="rgba(32,185,145,0.15)"
+              stroke="rgba(32,185,145,0.4)" stroke-width="0.5" />
+            <text x="284" y="112" fill="rgba(32,185,145,0.9)" font-family="monospace" font-size="4.2"
+              text-anchor="middle">
+              969 م
+            </text>
+          </g>
+
+          <!-- 4. Haret al-Rum — 31.25°E, 30.03°N → (259, 109) -->
+          <g class="mk" id="mk-rum" onclick="selectLocation(3)">
+            <circle cx="256" cy="112" r="16" fill="rgba(155,80,210,0.06)" class="pulse1"
+              style="transform-origin: 256px 112px; animation-delay: 1.5s" />
+            <circle cx="256" cy="112" r="10" fill="rgba(155,80,210,0.09)" class="pulse2"
+              style="transform-origin: 256px 112px; animation-delay: 1.9s" />
+            <!-- Square shape for visual distinction -->
+            <rect x="249.5" y="105.5" width="13" height="13" rx="2" fill="rgba(155,80,210,0.22)" stroke="#9b50d2"
+              stroke-width="1.8" class="mk-core" />
+            <text x="256" y="115.5" fill="#9b50d2" font-family="Cairo,sans-serif" font-size="7.5" text-anchor="middle"
+              font-weight="900">
+              ٤
+            </text>
+            <text x="242" y="109" fill="#9b50d2" font-family="Cairo,sans-serif" font-size="6" text-anchor="end"
+              font-weight="700">
+              ح. الروم
+            </text>
+            <rect x="213" y="111" width="22" height="7" rx="2" fill="rgba(155,80,210,0.15)"
+              stroke="rgba(155,80,210,0.4)" stroke-width="0.5" />
+            <text x="224" y="117" fill="rgba(155,80,210,0.9)" font-family="monospace" font-size="4.2"
+              text-anchor="middle">
+              1300 م
+            </text>
+          </g>
+
+          <!-- 5. Azbakeya — 31.23°E, 30.07°N → (258, 107) -->
+          <g class="mk" id="mk-azbakeya" onclick="selectLocation(4)">
+            <circle cx="261" cy="106" r="16" fill="rgba(220,60,110,0.06)" class="pulse1"
+              style="transform-origin: 261px 106px; animation-delay: 0.3s" />
+            <circle cx="261" cy="106" r="10" fill="rgba(220,60,110,0.09)" class="pulse2"
+              style="transform-origin: 261px 106px; animation-delay: 0.7s" />
+            <!-- Triangle shape for visual distinction -->
+            <polygon points="261,98 268,113 254,113" fill="rgba(220,60,110,0.22)" stroke="#dc3c6e" stroke-width="1.8"
+              class="mk-core" />
+            <text x="261" y="111" fill="#dc3c6e" font-family="Cairo,sans-serif" font-size="7.5" text-anchor="middle"
+              font-weight="900">
+              ٥
+            </text>
+            <text x="274" y="102" fill="#dc3c6e" font-family="Cairo,sans-serif" font-size="6" text-anchor="start"
+              font-weight="700">
+              الأزبكية
+            </text>
+            <rect x="274" y="103" width="24" height="7" rx="2" fill="rgba(220,60,110,0.15)"
+              stroke="rgba(220,60,110,0.4)" stroke-width="0.5" />
+            <text x="286" y="109" fill="rgba(220,60,110,0.9)" font-family="monospace" font-size="4.2"
+              text-anchor="middle">
+              1800 م
+            </text>
+          </g>
+
+          <!-- 6. Abbassia — 31.28°E, 30.07°N → (260, 107) -->
+          <g class="mk" id="mk-abbassia" onclick="selectLocation(5)">
+            <circle cx="263" cy="101" r="17" fill="rgba(60,185,100,0.06)" class="pulse1"
+              style="transform-origin: 263px 101px; animation-delay: 1.2s" />
+            <circle cx="263" cy="101" r="11" fill="rgba(60,185,100,0.09)" class="pulse2"
+              style="transform-origin: 263px 101px; animation-delay: 1.6s" />
+            <!-- Hexagon shape for visual distinction -->
+            <polygon points="263,93 270,97 270,105 263,109 256,105 256,97" fill="rgba(60,185,100,0.22)" stroke="#3cb964"
+              stroke-width="1.8" class="mk-core" />
+            <text x="263" y="104.5" fill="#3cb964" font-family="Cairo,sans-serif" font-size="7.5" text-anchor="middle"
+              font-weight="900">
+              ٦
+            </text>
+            <text x="276" y="97" fill="#3cb964" font-family="Cairo,sans-serif" font-size="6.5" text-anchor="start"
+              font-weight="700">
+              العباسية
+            </text>
+            <rect x="276" y="98" width="26" height="7" rx="2" fill="rgba(60,185,100,0.15)" stroke="rgba(60,185,100,0.4)"
+              stroke-width="0.5" />
+            <text x="289" y="104" fill="rgba(60,185,100,0.9)" font-family="monospace" font-size="4.2"
+              text-anchor="middle">
+              1875 م
+            </text>
+          </g>
+
+          <!-- 7. New Admin Capital — 31.77°E, 30.02°N → (279, 110) -->
+          <g class="mk" id="mk-nac" onclick="selectLocation(6)">
+            <circle cx="279" cy="110" r="22" fill="rgba(100,200,255,0.05)" class="pulse1"
+              style="transform-origin: 279px 110px; animation-delay: 0.8s" />
+            <circle cx="279" cy="110" r="14" fill="rgba(100,200,255,0.08)" class="pulse2"
+              style="transform-origin: 279px 110px; animation-delay: 1.3s" />
+            <circle cx="279" cy="110" r="9.5" fill="rgba(100,200,255,0.2)" stroke="#64c8ff" stroke-width="2"
+              class="mk-core" />
+            <text x="279" y="113.5" fill="#64c8ff" font-family="Cairo,sans-serif" font-size="8" text-anchor="middle"
+              font-weight="900">
+              ٧
+            </text>
+            <text x="279" y="127" fill="#64c8ff" font-family="Cairo,sans-serif" font-size="6.5" text-anchor="middle"
+              font-weight="700">
+              العاصمة الإدارية
+            </text>
+            <rect x="261" y="129" width="36" height="7" rx="2" fill="rgba(100,200,255,0.12)"
+              stroke="rgba(100,200,255,0.4)" stroke-width="0.5" />
+            <text x="279" y="135" fill="rgba(100,200,255,0.9)" font-family="monospace" font-size="4.2"
+              text-anchor="middle">
+              2022 م — الحاضر
+            </text>
+          </g>
+        </g>
+        <!-- end mapGroup -->
+
+        <!-- COMPASS (outside mapGroup, static) -->
+        <g transform="translate(35,530)">
+          <circle cx="0" cy="0" r="19" fill="rgba(4,12,26,0.85)" stroke="rgba(212,175,55,0.25)" stroke-width="1" />
+          <polygon points="0,-14 3,-4 0,-7 -3,-4" fill="#d4af37" />
+          <polygon points="0,14 3,4 0,7 -3,4" fill="rgba(212,175,55,0.35)" />
+          <polygon points="-14,0 -4,3 -7,0 -4,-3" fill="rgba(212,175,55,0.35)" />
+          <polygon points="14,0 4,3 7,0 4,-3" fill="rgba(212,175,55,0.35)" />
+          <text x="0" y="-17.5" fill="#d4af37" font-family="Cairo,sans-serif" font-size="6.5" text-anchor="middle">
+            ش
+          </text>
+          <circle cx="0" cy="0" r="2" fill="#d4af37" />
+        </g>
+
+        <!-- SCALE BAR -->
+        <g transform="translate(18,558)">
+          <rect x="0" y="0" width="64" height="3" fill="rgba(212,175,55,0.15)" />
+          <rect x="0" y="0" width="32" height="3" fill="rgba(212,175,55,0.5)" />
+          <text x="0" y="-2.5" fill="rgba(212,175,55,0.4)" font-family="monospace" font-size="4.5">
+            0
+          </text>
+          <text x="59" y="-2.5" fill="rgba(212,175,55,0.4)" font-family="monospace" font-size="4.5">
+            500km
+          </text>
+        </g>
+      </svg><!-- end SVG -->
+    </div>
+    <!-- end mapSection -->
+
+    <!-- TIMELINE -->
+    <div id="timeline">
+      <div id="tlTrack">
+        <div id="tlLine"></div>
+        <div id="tlNodes"></div>
+      </div>
+    </div>
+  </div>
+  <!-- end app -->
+
+  <!-- ===== SIDE PANEL ===== -->
+  <div id="sidePanel">
+    <div class="panel-topbar">
+      <span class="panel-tag">◈ الكرسي المرقسي — تفاصيل تاريخية</span>
+      <button class="close-btn" onclick="closePanel()">✕</button>
+    </div>
+
+    <!-- TITLE (compact, no image here) -->
+    <div class="panel-hdr">
+      <div class="panel-title" id="panelTitle"></div>
+      <div class="panel-sub" id="panelSub"></div>
+    </div>
+
+    <!-- TABS -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('history', this)">
+        ◈ التاريخ
+      </button>
+      <button class="tab-btn" onclick="switchTab('patriarchs', this)">
+        ✦ البطاركة
+      </button>
+      <button class="tab-btn" onclick="switchTab('sources', this)">
+        📖 الأسباب والمراجع
+      </button>
+    </div>
+
+    <!-- TAB 1: HISTORY -->
+    <div class="tab-pane active" id="tab-history">
+      <!-- IMAGE inside scroll area -->
+      <div class="img-wrap" id="imgWrap">
+        <div class="img-placeholder" id="imgPlaceholder">
+          <div class="icon">🏛️</div>
+          <p>صورة الموقع</p>
+        </div>
+        <img class="loc-img" id="locImg" src="" alt="" onerror="
+              this.style.display = 'none';
+              document.getElementById('imgPlaceholder').style.display = 'block';
+            " />
+        <div class="img-gradient"></div>
+        <div class="period-badge" id="periodBadge"></div>
+        <button class="img-dl-btn" id="imgDlBtn" onclick="downloadImgAsPng()" title="تحميل الصورة PNG"
+          style="display: none">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <path d="M6.5 1v7M4 6l2.5 2.5L9 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M2 10v1a1 1 0 001 1h7a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.3"
+              stroke-linecap="round" />
+          </svg>
+          PNG
+        </button>
+      </div>
+      <div class="info-grid">
+        <div class="info-card">
+          <div class="info-card-lbl">الحقبة الزمنية</div>
+          <div class="info-card-val" id="infoEra"></div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-lbl">السياق التاريخي</div>
+          <div class="info-card-val" id="infoCtx"></div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div>
+        <div class="section-label">◈ النص التاريخي</div>
+        <p class="desc-text" id="descText"></p>
+        <span class="tw-cursor" id="twCursor"></span>
+      </div>
+      <div class="fun-fact-box" id="funFactBox">
+        <div class="fun-fact-head">✦ حقيقة مثيرة للاهتمام</div>
+        <p class="fun-fact-text" id="funFactText"></p>
+      </div>
+    </div>
+
+    <!-- TAB 2: PATRIARCHS -->
+    <div class="tab-pane" id="tab-patriarchs">
+      <p class="patriarch-intro" id="patriarchIntro"></p>
+      <div id="popeCountWrap"></div>
+      <div class="pp-scroll">
+        <div class="pp-track" id="ppTrack"></div>
+      </div>
+    </div>
+
+    <!-- TAB 3: SOURCES -->
+    <div class="tab-pane" id="tab-sources">
+      <div class="reasons-box" id="reasonsBox" style="display: block">
+        <div class="reasons-head">
+          <div class="reasons-head-icon">↗</div>
+          <span id="reasonsLabel">أسباب الانتقال إلى هذا المقر</span>
+        </div>
+        <div id="reasonsList"></div>
+      </div>
+      <div class="refs-box" id="refsBox" style="display: block">
+        <div class="refs-head">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+            <rect x="1" y="1" width="11" height="11" rx="2" stroke="rgba(212,175,55,0.6)" stroke-width="1" />
+            <line x1="3.5" y1="4" x2="9.5" y2="4" stroke="rgba(212,175,55,0.6)" stroke-width="0.9" />
+            <line x1="3.5" y1="6.5" x2="9.5" y2="6.5" stroke="rgba(212,175,55,0.6)" stroke-width="0.9" />
+            <line x1="3.5" y1="9" x2="7" y2="9" stroke="rgba(212,175,55,0.6)" stroke-width="0.9" />
+          </svg>
+          المراجع والمصادر القبطية
+        </div>
+        <div id="refsList"></div>
+      </div>
+    </div>
+
+    <div class="nav-btns">
+      <button class="btn-outline" onclick="prevLoc()">→ السابق</button>
+      <button class="btn-gold" onclick="nextLoc()">← المقر التالي</button>
+    </div>
+  </div>
+
+  <!-- ===== WELCOME OVERLAY ===== -->
+  <div id="welcome">
+    <div class="welcome-cross-wrap" id="wCrossWrap">
+      <div class="w-ring"></div>
+      <div class="w-ring2"></div>
+      <svg width="90" height="90" viewBox="0 0 90 90" id="wCross">
+        <circle cx="45" cy="45" r="41" fill="none" stroke="#d4af37" stroke-width="2" opacity="0.6" />
+        <circle cx="45" cy="45" r="28" fill="none" stroke="#d4af37" stroke-width="0.8" opacity="0.3" />
+        <line x1="45" y1="6" x2="45" y2="84" stroke="#d4af37" stroke-width="3.5" />
+        <line x1="6" y1="45" x2="84" y2="45" stroke="#d4af37" stroke-width="3.5" />
+        <circle cx="45" cy="45" r="7" fill="#d4af37" />
+        <circle cx="45" cy="7.5" r="5.5" fill="#d4af37" />
+        <circle cx="45" cy="82.5" r="5.5" fill="#d4af37" />
+        <circle cx="7.5" cy="45" r="5.5" fill="#d4af37" />
+        <circle cx="82.5" cy="45" r="5.5" fill="#d4af37" />
+      </svg>
+    </div>
+    <h1 class="w-title">
+      المقرات البابوية القبطية<br /><span style="font-size: 1.15rem; color: rgba(212, 175, 55, 0.55)">رحلة عبر
+        التاريخ</span>
+    </h1>
+    <p class="w-subtitle">
+      عرض تفاعلي لتطور مقرات الكرسي البابوي للكنيسة القبطية الأرثوذكسية — من
+      الإسكندرية حتى العاصمة الإدارية الجديدة
+    </p>
+
+    <p class="w-subtitle">
+      الكلية الإكليريكة اللاهوتية القبطيةالأرثوذكسية بالأسكندرية
+    </p>
+
+    <div class="w-years">
+      <span>٤٢ م</span>
+      <div class="w-line"></div>
+      <span style="opacity: 0.5">•</span>
+      <div class="w-line"></div>
+      <span>٢٠١٩ م</span>
+    </div>
+    <button class="btn-gold" style="padding: 0.7rem 2.5rem; font-size: 1rem; margin-top: 10px"
+      onclick="dismissWelcome()">
+      ابدأ الرحلة التفاعلية ←
+    </button>
+    <p class="w-footer">
+      COPTIC ORTHODOX CHURCH &nbsp;•&nbsp; INTERACTIVE MUSEUM EXHIBIT 2026
+    </p>
+    <p class="w-footer">دفعة ثانية دبلوم طلبة في مادة التاريخ الكنسي.</p>
+    <p class="w-footer">٢٠٢٥–٢٠٢٦م</p>
+  </div>
+
+  <!-- ===== TEAM MODAL ===== -->
+  <div id="teamOverlay" onclick="if (event.target === this) closeTeam();">
+    <div id="teamBox">
+      <div class="team-header">
+        <div>
+          <div class="team-header-title">فريق العمل</div>
+          <div class="team-header-sub">
+            RESEARCH & DEVELOPMENT TEAM &nbsp;•&nbsp; 8 MEMBERS
+          </div>
+        </div>
+        <button class="team-close" onclick="closeTeam()">✕</button>
+      </div>
+
+      <div class="team-coptic-cross">
+        <svg width="28" height="28" viewBox="0 0 28 28">
+          <circle cx="14" cy="14" r="12" fill="none" stroke="rgba(212,175,55,0.4)" stroke-width="1.2" />
+          <line x1="14" y1="2" x2="14" y2="26" stroke="#d4af37" stroke-width="2" />
+          <line x1="2" y1="14" x2="26" y2="14" stroke="#d4af37" stroke-width="2" />
+          <circle cx="14" cy="14" r="3" fill="#d4af37" />
+          <circle cx="14" cy="3.5" r="2" fill="#d4af37" />
+          <circle cx="14" cy="24.5" r="2" fill="#d4af37" />
+          <circle cx="3.5" cy="14" r="2" fill="#d4af37" />
+          <circle cx="24.5" cy="14" r="2" fill="#d4af37" />
+        </svg>
+        <p class="team-project-label">
+          مشروع:
+          <strong style="color: var(--gold)">المقرات البابوية القبطية — رحلة عبر التاريخ</strong><br />استكشاف تفاعلي
+          لتطور مقرات الكرسي البابوي من الإسكندرية حتى
+          العاصمة الإدارية الجديدة
+        </p>
+      </div>
+
+      <div class="team-grid" id="teamGrid"></div>
+
+      <div class="team-footer">
+        <span class="team-footer-note">الكليةالإكليريكة اللاهوتية القبطية الأرثوذكسية بالأسكندرية</span>
+        <span class="team-footer-note" style="font-family: monospace; font-size: 0.6rem">٢٠٢٥–٢٠٢٦م</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===========================
+    // DATA
+    // ===========================
+    const LOCS = [
+      {
+        id: "alexandria",
+        name: "الإسكندرية",
+        nameEn: "ALEXANDRIA",
+        period: "٤٢ م — ٦٤١ م",
+        era: "الحقبة الرسولية",
+        ctx: "الإمبراطورية الرومانية",
+        color: "#d4af37",
+        sx: 209,
+        sy: 44,
+        zx: 209,
+        zy: 44,
+        zs: 3.5,
+        desc: "وضع القديس مرقس الرسول حجر الأساس للكنيسة القبطية في الإسكندرية عام ٤٢م، حيث كانت تُعدّ من أعظم مدن العالم وأكثرها إشراقاً بالفكر والفلسفة. وقد أصبحت المنارةَ الأولى للمسيحية في القارة الأفريقية، إذ تأسّست مدرستها اللاهوتية العتيقة التي أنجبت عباقرة الفكر المسيحي كأوريجانوس وكليمندس. وظلّت الإسكندرية لسبعة قرون كاملة مقرّاً للكرسي البابوي الرسولي يُشعّ نوره على العالم.",
+        fun: "أسّس القديس مرقس الكرسيَّ البابوي القبطي ليكون الكرسي الرسولي الثالث في العالم بعد روما وأنطاكية، وهو أقدم كنيسة مسيحية في القارة الأفريقية وأحد أعرق الكراسي الرسولية في التاريخ.",
+        coords: "31°12'N 29°55'E",
+        isFounding: true,
+        img: "The Pope's headquarters\\Al-Mirqasiya_Alexandria.jpg",
+        patriarchsIntro:
+          "أسّس القديس مرقس الرسول هذا الكرسي فمنه انطلق ستة وثلاثون بطريركاً على مدى ستة قرون، كان أبرزهم آباء الكنيسة الجامعة الذين رسّخوا اللاهوت المسيحي.",
+        patriarchs: [
+          {
+            num: "١",
+            name: "مرقس الرسول",
+            years: "٤٢–٦٨م",
+            type: "key",
+            note: "مؤسس الكرسي",
+          },
+          {
+            num: "١٢",
+            name: "ديمتريوس الأول",
+            years: "١٨٨–٢٣١م",
+            type: "hi",
+            note: "أول بطريرك مصري",
+          },
+          {
+            num: "١٣",
+            name: "هيراقلاس",
+            years: "٢٣١–٢٤٦م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "١٤",
+            name: "ديونيسيوس الكبير",
+            years: "٢٤٦–٢٦٤م",
+            type: "hi",
+            note: "",
+          },
+          {
+            num: "١٧",
+            name: "بطرس الأول",
+            years: "٣٠٠–٣١١م",
+            type: "key",
+            note: "خاتم الشهداء",
+          },
+          {
+            num: "١٩",
+            name: "الإسكندر الأول",
+            years: "٣١٢–٣٢٨م",
+            type: "hi",
+            note: "مجمع نيقية ٣٢٥م",
+          },
+          {
+            num: "٢٠",
+            name: "أثناسيوس الرسولي",
+            years: "٣٢٨–٣٧٣م",
+            type: "key",
+            note: "حارس الأرثوذكسية",
+          },
+          {
+            num: "٢٤",
+            name: "كيرلس الكبير",
+            years: "٤١٢–٤٤٤م",
+            type: "key",
+            note: "عمود الدين",
+          },
+          {
+            num: "٢٥",
+            name: "ديسقوروس الأول",
+            years: "٤٤٤–٤٥٤م",
+            type: "hi",
+            note: "رفض خلقيدون",
+          },
+          {
+            num: "٣٨",
+            name: "بنيامين الأول",
+            years: "٦٢٢–٦٦١م",
+            type: "key",
+            note: "شهد الفتح الإسلامي",
+          },
+        ],
+        reasons: [
+          "اختارها القديس مرقس الرسول لأنها كانت عاصمة العالم الهيليني وبوابة التواصل الحضاري بين الشرق والغرب",
+          "تمتّعت بأكبر جالية يهودية في العالم آنذاك، مما يسّر تبشير مرقس باعتباره يهودياً يعرف توقّعاتهم المسيحانية",
+          "كانت مقرّاً لمكتبة الإسكندرية الشهيرة، مما أهّلها لاحتضان لاهوت مسيحي عقلاني رفيع المستوى",
+          "موقعها البحري الاستراتيجي جعلها مركزاً طبيعياً للتواصل مع كنائس روما وأنطاكية وغيرها",
+        ],
+        refs: [
+          {
+            tag: "REF 1",
+            type: "primary",
+            author: "الأنبا ساويرس بن المقفع (أسقف الأشمونين، ق. ١٠م)",
+            title: "تاريخ بطاركة الإسكندرية — Patrologia Orientalis",
+            detail:
+              "تحقيق: B. Evetts، باريس، ١٩٠٤م — المصدر العربي القبطي الأصيل لسير البطاركة",
+          },
+          {
+            tag: "REF 2",
+            type: "primary",
+            author: "إيريس حبيب المصري",
+            title: "قصة الكنيسة القبطية، ج١، ص ٢٣–٥٨",
+            detail: "مدرسة الإسكندرية للدراسات المسيحية، القاهرة، ط٣، ١٩٧٨م",
+          },
+          {
+            tag: "REF 3",
+            type: "secondary",
+            author: "أزيز سوريال عطية (محرر)",
+            title:
+              'The Coptic Encyclopedia, Vol.1 — "Alexandria, Evangelization of"',
+            detail: "Macmillan Publishing, New York, 1991",
+          },
+        ],
+      },
+      {
+        id: "fustat",
+        name: "الفسطاط — مصر القديمة",
+        nameEn: "FUSTAT / OLD CAIRO",
+        period: "٦٤١ م — ٩٦٩ م",
+        era: "العصر الإسلامي الأول",
+        ctx: "الخلافة الأموية والعباسية",
+        color: "#d4af37",
+        sx: 258,
+        sy: 110,
+        zx: 263,
+        zy: 108,
+        zs: 6.5,
+        desc: "مع الفتح الإسلامي لمصر على يد عمرو بن العاص عام ٦٤١م، انتقل مقر الكرسي البابوي من الإسكندرية إلى الفسطاط التي أُسّست حديثاً. وقد شهدت هذه المرحلة تحولاتٍ جوهريةً في الحياة الكنسية إذ أصبحت الكنيسة القبطية تتعايش في ظلّ حكم إسلامي. وما زالت المنطقة تحتضن إلى اليوم كنيسة العذراء المعلّقة الشهيرة وكنيسة القديس سرجيوس وكنيسة أبي سيفين، شواهد صامتة على عمق التاريخ.",
+        fun: "كنيسة العذراء المعلّقة بُنيت فوق برجَي البوابة الرومانية القديمة لمدينة بابليون، ومن هنا جاء اسمها — إذ تبدو معلّقةً في الهواء! وهي من أقدم الكنائس المسيحية في العالم.",
+        coords: "30°00'N 31°13'E",
+        img: "The Pope's headquarters\\Fasfat_al-mu'allaqa.jpg",
+        patriarchsIntro:
+          "من البطريرك بنيامين الأول الذي استقبل عمرو بن العاص حتى قزمان الرابع، أدار هؤلاء البطاركة الثلاثة وعشرون الكنيسةَ في ظل الحكم الأموي ثم العباسي.",
+        patriarchs: [
+          {
+            num: "٣٨",
+            name: "بنيامين الأول",
+            years: "٦٢٢–٦٦١م",
+            type: "key",
+            note: "أول بطاركة الفسطاط",
+          },
+          {
+            num: "٣٩",
+            name: "أغاثون",
+            years: "٦٦١–٦٧٧م",
+            type: "",
+            note: "",
+          },
+          { num: "٤١", name: "إسحق", years: "٦٨٩–٦٩٢م", type: "", note: "" },
+          {
+            num: "٤٦",
+            name: "ميخائيل الأول",
+            years: "٧٤٣–٧٦٧م",
+            type: "hi",
+            note: "إصلاح ليتورجي",
+          },
+          { num: "٤٨", name: "يعقوب", years: "٨١٩–٨٣٠م", type: "", note: "" },
+          {
+            num: "٥٧",
+            name: "شنوده الأول",
+            years: "٨٥٩–٨٨٠م",
+            type: "hi",
+            note: "",
+          },
+          {
+            num: "٥٨",
+            name: "ميخائيل الرابع",
+            years: "٨٨٠–٩٠٧م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "٦٠",
+            name: "قزمان الرابع",
+            years: "٩٢٠–٩٣٢م",
+            type: "key",
+            note: "آخر بطاركة الفسطاط",
+          },
+        ],
+        reasons: [
+          "تحوّل مركز الثقل السياسي والإداري لمصر من الإسكندرية إلى الفسطاط عقب الفتح الإسلامي عام ٦٤١م",
+          "رغبة البطاركة في الاقتراب من الحاكم الجديد لتسهيل التفاوض وحماية مصالح الرعية القبطية",
+          "اندلاع موجة من الاضطرابات في الإسكندرية أثناء الفتح جعلت البقاء فيها أمراً محفوفاً بالمخاطر",
+          "وجود مجتمعات قبطية عريقة في منطقة الفسطاط ومصر القديمة (بابليون) يعود تاريخها إلى قرون",
+        ],
+        refs: [
+          {
+            tag: "REF 1",
+            type: "primary",
+            author: "الأنبا ساويرس بن المقفع وخلفاؤه",
+            title:
+              "تاريخ بطاركة الإسكندرية، ج٢ — البطاركة من بنيامين الأول (٣٨) إلى أبرآم (٦٢)",
+            detail:
+              "Patrologia Orientalis, تحقيق: Evetts & O'Leary، ١٩٠٧–١٩٤٨م",
+          },
+          {
+            tag: "REF 2",
+            type: "primary",
+            author: "إيريس حبيب المصري",
+            title:
+              "قصة الكنيسة القبطية، ج٢، فصل: الكنيسة في ظل الحكم الإسلامي",
+            detail: "مدرسة الإسكندرية للدراسات المسيحية، القاهرة، ط٢، ١٩٧٩م",
+          },
+          {
+            tag: "REF 3",
+            type: "tertiary",
+            author: "Alfred J. Butler",
+            title:
+              '"The Arab Conquest of Egypt and the Last Thirty Years of the Roman Dominion"',
+            detail: "Oxford University Press, 1902 — مرجع مكمّل بالإنجليزية",
+          },
+        ],
+      },
+      {
+        id: "zuweila",
+        name: "حارة زويلة",
+        nameEn: "HARET ZUWEILA",
+        period: "٩٦٩ م — ١٢٥٠ م",
+        era: "الدولة الفاطمية",
+        ctx: "الخلافة الفاطمية الشيعية",
+        color: "#cd7f32",
+        sx: 259,
+        sy: 108,
+        zx: 263,
+        zy: 108,
+        zs: 6.5,
+        desc: "في عهد الخليفة الفاطمي المعز لدين الله، تأسّست القاهرة الفاطمية عام ٩٦٩م، وانتقل البطاركة إلى حارة زويلة التي كانت تقع جنوب المدينة الجديدة. وشهد هذا العصر انتعاشاً لافتاً للكنيسة القبطية نتيجة التسامح الديني النسبي في عهد الفاطميين، إذ تمتّع الأقباط بحرية ممارسة شعائرهم وتشييد كنائسهم، بل وتقلّد بعضهم مناصب رفيعة في الدولة.",
+        fun: "في عهد الخليفة الفاطمي العزيز بالله، تولّى وزير قبطي اسمه عيسى بن نسطورس مقاليد الحكم في مصر وسوريا معاً في وقت واحد — سابقةٌ تاريخيةٌ نادرة الحدوث في العالم الإسلامي.",
+        coords: "30°03'N 31°15'E",
+        img: "The Pope's headquarters\\Harah_Zuwaila.jpg",
+        patriarchsIntro:
+          "في ظل الدولة الفاطمية تعاقب على الكرسي اثنا عشر بطريركاً، أبرزهم من عاش التناقض بين التسامح الفاطمي ومحن الحاكم بأمر الله.",
+        patriarchs: [
+          {
+            num: "٦١",
+            name: "مكاريوس الثالث",
+            years: "٩٣٢–٩٥٢م",
+            type: "key",
+            note: "أول بطاركة القاهرة",
+          },
+          {
+            num: "٦٢",
+            name: "إبراهيم بن زرعة",
+            years: "٩٧٥–٩٧٨م",
+            type: "hi",
+            note: "عصر المعز الفاطمي",
+          },
+          {
+            num: "٦٣",
+            name: "فيلوثاوس",
+            years: "٩٧٩–١٠٠٣م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "٦٤",
+            name: "زخارياس",
+            years: "١٠٠٤–١٠٣٢م",
+            type: "hi",
+            note: "محن الحاكم بأمر الله",
+          },
+          {
+            num: "٦٧",
+            name: "كيرلس الثاني",
+            years: "١٠٧٨–١٠٩٢م",
+            type: "hi",
+            note: "",
+          },
+          {
+            num: "٦٩",
+            name: "جبرائيل الثاني",
+            years: "١١٣١–١١٤٥م",
+            type: "hi",
+            note: "أول من أوجب العربية",
+          },
+          {
+            num: "٧٣",
+            name: "يوحنا الخامس",
+            years: "١١٦٣–١١٨٩م",
+            type: "",
+            note: "عصر صلاح الدين",
+          },
+          {
+            num: "٧٤",
+            name: "كيرلس ابن لقلق",
+            years: "١٢٣٥–١٢٤٣م",
+            type: "key",
+            note: "آخر بطاركة زويلة",
+          },
+        ],
+        reasons: [
+          "أسّس الفاطميون مدينة القاهرة عام ٩٦٩م لتكون عاصمتهم الجديدة، فأصبحت المركز السياسي والاقتصادي لمصر",
+          "تمتّع الأقباط بنفوذ متصاعد في الدولة الفاطمية، مما أتاح للبطاركة الاقتراب من دوائر السلطة",
+          "أصدر المعز لدين الله أوامره بإعادة الكنائس التي هُدمت، فشجّع ذلك الكنيسة على الانتقال إلى العاصمة الجديدة",
+          "حارة زويلة كانت تقع بجوار السور الجنوبي للقاهرة الفاطمية مما جعلها منطقةً آمنةً ومزدهرة للمسيحيين",
+        ],
+        refs: [
+          {
+            tag: "REF 1",
+            type: "primary",
+            author: "الأنبا ساويرس وخلفاؤه — محررو التاريخ الفاطمي",
+            title:
+              "تاريخ بطاركة الإسكندرية، ج٣ — البطاركة في العصر الفاطمي (٦٠–٧٦)",
+            detail:
+              "Patrologia Orientalis, Vol.10، ١٩١٥م — يشمل عهود فيلوثاوس وزخارياس وكيرلس الثاني",
+          },
+          {
+            tag: "REF 2",
+            type: "primary",
+            author: "إيريس حبيب المصري",
+            title:
+              "قصة الكنيسة القبطية، ج٢، ص ٢١٥–٢٧٠: الكنيسة في عهد الفاطميين",
+            detail: "مدرسة الإسكندرية للدراسات المسيحية، القاهرة، ١٩٧٩م",
+          },
+          {
+            tag: "REF 3",
+            type: "secondary",
+            author: "يوهانس دن هيير (Johannes den Heijer)",
+            title: '"Mawhūb ibn Manṣūr et l\'historiographie copto-arabe"',
+            detail:
+              "Subsidia Hagiographica 83، Brussels, 1989 — دراسة في التأريخ القبطي العربي الفاطمي",
+          },
+        ],
+      },
+      {
+        id: "rum",
+        name: "حارة الروم",
+        nameEn: "HARET AL-RUM",
+        period: "١٢٥٠ م — ١٨٠٠ م",
+        era: "العصر المملوكي",
+        ctx: "دولة المماليك البحرية والجراكسة",
+        color: "#c0a030",
+        sx: 256,
+        sy: 112,
+        zx: 263,
+        zy: 108,
+        zs: 6.5,
+        desc: "في العصر المملوكي، انتقل مقر الكرسي البابوي إلى حارة الروم في قلب القاهرة التاريخية، ملتقى الجاليات الأجنبية والمسيحية. وشهدت هذه الحقبة علاقاتٍ متقلّبةً بين الكنيسة القبطية والسلطة المملوكية، تراوحت بين الاضطهاد الشديد أحياناً والتسامح أحياناً أخرى. غير أن الكنيسة صمدت تصون هويتها وتحمي إرثها اللاهوتي والليتورجي العريق عبر القرون.",
+        fun: "خلال الحملة الصليبية السابعة بقيادة لويس التاسع، أجرى البطريرك القبطي مفاوضاتٍ سريةً بين الأطراف المتحاربة، مُدركاً أن الشعب القبطي سيدفع الثمن مهما كانت نتيجة المعركة.",
+        coords: "30°02'N 31°15'E",
+        img: "The Pope's headquarters\\Harat_al-Rum.jpg",
+        patriarchsIntro:
+          "خمسة قرون ونيّف أمضاها الكرسي في حارة الروم — أطول حقبة مستقرة. تعاقب خلالها أكثر من ثلاثين بطريركاً بين مد وجزر مع المماليك والعثمانيين.",
+        patriarchs: [
+          {
+            num: "٧٥",
+            name: "أثناسيوس الثالث",
+            years: "١٢٥١–١٢٦١م",
+            type: "key",
+            note: "أول بطاركة حارة الروم",
+          },
+          {
+            num: "٧٩",
+            name: "يوحنا السابع",
+            years: "١٢٦٢–١٢٦٨م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "٨٢",
+            name: "جبرائيل الرابع",
+            years: "١٣٧٠–١٣٧٨م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "٨٧",
+            name: "جبرائيل الخامس",
+            years: "١٤٠٩–١٤٢٧م",
+            type: "hi",
+            note: "",
+          },
+          {
+            num: "٩٢",
+            name: "جبرائيل السابع",
+            years: "١٥٢٥–١٥٦٨م",
+            type: "hi",
+            note: "أطول مدة في الحقبة",
+          },
+          {
+            num: "٩٥",
+            name: "مرقس الثالث",
+            years: "١٦٢٢–١٦٣٦م",
+            type: "",
+            note: "العثمانيون في مصر",
+          },
+          {
+            num: "١٠٢",
+            name: "بطرس السادس",
+            years: "١٦٩٧–١٧٢٦م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "١٠٧",
+            name: "يوأنس الثامن عشر",
+            years: "١٧٦٩–١٧٩٦م",
+            type: "key",
+            note: "انتقل إلى الأزبكية",
+          },
+        ],
+        reasons: [
+          "سقوط الخلافة الفاطمية على يد صلاح الدين الأيوبي عام ١١٧١م غيّر خريطة النفوذ داخل القاهرة وأجبر البطريركية على إعادة تموضعها",
+          "حارة الروم كانت ملتقى الجاليات المسيحية المتنوعة (الروم، والأرمن، والسريان)، فوفّرت للمقر البابوي دعماً جماعياً",
+          "هشاشة الأوضاع في حارة زويلة إبان التحولات السياسية المتسارعة بين الأيوبيين والمماليك",
+          "رغبة البطاركة في العيش وسط تجمّع مسيحي متنوّع يُشكّل درعاً بشريةً طبيعيةً في مواجهة الضغوط المتكررة",
+        ],
+        refs: [
+          {
+            tag: "REF 1",
+            type: "primary",
+            author: "إيريس حبيب المصري",
+            title: "قصة الكنيسة القبطية، ج٣، فصل: الكنيسة في عهد المماليك",
+            detail: "مدرسة الإسكندرية للدراسات المسيحية، القاهرة، ط٢، ١٩٨٠م",
+          },
+          {
+            tag: "REF 2",
+            type: "primary",
+            author: "الأنبا ساويرس وخلفاؤه",
+            title:
+              "تاريخ بطاركة الإسكندرية — البطاركة في العصر الأيوبي والمملوكي (٧٦–٩٦)",
+            detail: "Patrologia Orientalis, Vols.14–20، ١٩٢٠–١٩٤٥م",
+          },
+          {
+            tag: "REF 3",
+            type: "secondary",
+            author: "أزيز سوريال عطية (محرر)",
+            title:
+              'The Coptic Encyclopedia, Vol.5 — "Mamluk Period, Copts in"',
+            detail: "Macmillan Publishing, New York, 1991, pp.1511–1518",
+          },
+        ],
+      },
+      {
+        id: "azbakeya",
+        name: "الأزبكية",
+        nameEn: "AZBAKEYA",
+        period: "١٨٠٠ م — ١٩٦٨ م",
+        era: "عصر النهضة الحديثة",
+        ctx: "مصر المحمدية والخديوية",
+        color: "#f0d23c",
+        sx: 261,
+        sy: 106,
+        zx: 263,
+        zy: 108,
+        zs: 6.5,
+        desc: "على إيقاع التحولات الكبرى التي أحدثتها نهضة محمد علي باشا، انتقل المقر البابوي إلى حي الأزبكية في القاهرة الحديثة. وشهدت هذه المرحلة نهضةً قبطيةً شاملة في التعليم والفنون وإحياء الموروث اللاهوتي، وتولّى كثيرٌ من الأقباط مناصب رفيعة في الدولة المصرية الحديثة. وقد رسّخ البطريرك كيرلس الرابع — المعروف بأبي الإصلاح — هذه النهضة بجهوده التعليمية الرائدة.",
+        fun: "أسّس البطريرك كيرلس الرابع عام ١٨٥٤ المدرسة القبطية الكبرى بالأزبكية، وهي من أوائل المدارس الحديثة في مصر، وكانت تُدرِّس العلوم والفلك والرياضيات والموسيقى إلى جانب اللاهوت.",
+        coords: "30°04'N 31°14'E",
+        img: "The Pope's headquarters\\Al-Azbakeya.jpg",
+        patriarchsIntro:
+          'في حقبة النهضة المصرية الحديثة، قاد تسعة بطاركة الكنيسة القبطية من الأزبكية، وكان أبرزهم كيرلس الرابع "أبو الإصلاح" وكيرلس الخامس الذي امتد عهده أكثر من خمسة وأربعين عاماً.',
+        patriarchs: [
+          {
+            num: "١٠٧",
+            name: "يوأنس الثامن عشر",
+            years: "١٧٦٩–١٧٩٦م",
+            type: "key",
+            note: "فتح حقبة الأزبكية",
+          },
+          {
+            num: "١٠٨",
+            name: "مرقس الثامن",
+            years: "١٧٩٦–١٨٠٩م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "١٠٩",
+            name: "بطرس الجاولي",
+            years: "١٨٠٩–١٨٥٢م",
+            type: "hi",
+            note: "عصر محمد علي",
+          },
+          {
+            num: "١١٠",
+            name: "كيرلس الرابع",
+            years: "١٨٥٣–١٨٦١م",
+            type: "key",
+            note: "أبو الإصلاح",
+          },
+          {
+            num: "١١١",
+            name: "ديمتريوس الثاني",
+            years: "١٨٦١–١٨٧٠م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "١١٢",
+            name: "كيرلس الخامس",
+            years: "١٨٧٤–١٩٢٧م",
+            type: "hi",
+            note: "٥٣ عاماً في الكرسي",
+          },
+          {
+            num: "١١٣",
+            name: "يوحنا التاسع عشر",
+            years: "١٩٢٨–١٩٤٢م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "١١٥",
+            name: "يوساب الثاني",
+            years: "١٩٤٦–١٩٥٦م",
+            type: "",
+            note: "",
+          },
+          {
+            num: "١١٦",
+            name: "كيرلس السادس",
+            years: "١٩٥٩–١٩٧١م",
+            type: "key",
+            note: "أسس كاتدرائية العباسية",
+          },
+        ],
+        reasons: [
+          "إعادة التخطيط العمراني لقلب القاهرة في عهد محمد علي باشا أفقدت المواقع القديمة طابعها وجعلت الأزبكية الحي الأرقى والأكثر مدنيةً في العاصمة",
+          "رغبة البطريرك يوأنس الثامن عشر في الانفتاح على ثقافة النهضة الحديثة ومواكبة رياح التحديث التي هبّت على مصر",
+          "اتساع المساحات في الأزبكية أتاح إنشاء مقر أكثر رحابةً وكنائس أضخم تعكس مكانة الكنيسة المتنامية",
+          "قرب الأزبكية من مراكز الحكم الحديثة (القصور الخديوية والوزارات) سهّل على البطاركة التواصل مع الدولة",
+        ],
+        refs: [
+          {
+            tag: "REF 1",
+            type: "primary",
+            author: "إيريس حبيب المصري",
+            title:
+              "قصة الكنيسة القبطية، ج٤، فصل: النهضة القبطية في القرن التاسع عشر",
+            detail: "مدرسة الإسكندرية للدراسات المسيحية، القاهرة، ط١، ١٩٨٠م",
+          },
+          {
+            tag: "REF 2",
+            type: "primary",
+            author: "يوسف منقريوس (أسقف أسيوط لاحقاً)",
+            title: "مشاهير الأقباط في القرن التاسع عشر",
+            detail:
+              "مطبعة التوفيق، القاهرة، ١٩١٠م — شاهد عصر على النهضة القبطية",
+          },
+          {
+            tag: "REF 3",
+            type: "secondary",
+            author: "أزيز سوريال عطية (محرر)",
+            title:
+              'The Coptic Encyclopedia, Vol.3 — "Cyril IV" & "Azbakiyyah"',
+            detail: "Macmillan Publishing, New York, 1991",
+          },
+        ],
+      },
+      {
+        id: "abbassia",
+        name: "العباسية — الكاتدرائية الكبرى",
+        nameEn: "ABBASSIA CATHEDRAL",
+        period: "١٩٦٨ م — الحاضر",
+        era: "النهضة القبطية المعاصرة",
+        ctx: "القرن العشرون",
+        color: "#d4af37",
+        sx: 263,
+        sy: 101,
+        zx: 263,
+        zy: 108,
+        zs: 6.5,
+        desc: "في عهد البابا الراحل كيرلس السادس، تحوّل المقر البابوي إلى حي العباسية عام ١٩٦٨م، حيث دُشِّنت كاتدرائية القديس مرقس الكبرى لتكون رمزاً للنهضة القبطية المعاصرة. وقد تزامن افتتاحها مع عودة جزء من رفات القديس مرقس الرسول من كنيسة سان ماركو في البندقية بإيطاليا. ثم جاء البابا شنوده الثالث ليُحوِّل الكنيسة إلى قوة روحية وثقافية عالمية، بما بناه من مئات الكنائس والأسقفيات في المهجر، مُحوِّلاً الكنيسة القبطية إلى كنيسة عالمية حقيقية.",
+        fun: "تحتضن كاتدرائية العباسية ضريح البابا كيرلس السادس وضريح البابا شنوده الثالث، وقد استقبلت على مرّ العقود الملايين من الأقباط الحجاج الروحيين من مصر وسائر أنحاء العالم.",
+        coords: "30°04'N 31°17'E",
+        img: "The Pope's headquarters\\Abbassia.jpg",
+        patriarchsIntro:
+          "منذ افتتاح كاتدرائية القديس مرقس عام ١٩٦٨م، قاد الكنيسةَ ثلاثة بطاركة حوّلوها إلى كنيسة عالمية بالمهجر، وصوّنوا وحدتها في وجه التحديات المعاصرة.",
+        patriarchs: [
+          {
+            num: "١١٦",
+            name: "كيرلس السادس",
+            years: "١٩٥٩–١٩٧١م",
+            type: "key",
+            note: "افتتح الكاتدرائية ١٩٦٨",
+          },
+          {
+            num: "١١٧",
+            name: "شنوده الثالث",
+            years: "١٩٧١–٢٠١٢م",
+            type: "key",
+            note: "٤١ عاماً — بطريرك العالم",
+          },
+          {
+            num: "١١٨",
+            name: "تواضروس الثاني",
+            years: "٢٠١٢–الحاضر",
+            type: "key",
+            note: "افتتح كاتدرائية العاصمة",
+          },
+        ],
+        reasons: [
+          "رؤية البابا كيرلس السادس ببناء كاتدرائية ضخمة جديرة بمكانة الكرسي المرقسي، وكانت العباسية توفّر المساحة الكافية لهذا المشروع العملاق",
+          "ازدحام منطقة الأزبكية وتراجع طابعها الراقي مع توسّع المدينة جعلا المقر القديم غير لائق بتمثيل الكنيسة",
+          "افتُتحت كاتدرائية القديس مرقس بالعباسية عام ١٩٦٨م بحضور الرئيس جمال عبد الناصر وعودة جزء من رفات القديس مرقس الرسول من مدينة البندقية (فينيسيا) بإيطاليا، لحظةٌ تاريخيةٌ استدعت مقراً جديراً بها",
+          "أتاحت العباسية بناء مجمع كامل يضم الكاتدرائية والمدرسة الإكليريكية والمباني الإدارية في موقع واحد متكامل",
+        ],
+        refs: [
+          {
+            tag: "REF 1",
+            type: "primary",
+            author:
+              "مجلة الكرازة — الجريدة الرسمية للكنيسة القبطية الأرثوذكسية",
+            title: "العدد الخاص بافتتاح كاتدرائية القديس مرقس بالعباسية",
+            detail:
+              "يونيو ١٩٦٨م — يُسجّل الحدث بالتفصيل بما فيه عودة الرفات من البندقية",
+          },
+          {
+            tag: "REF 2",
+            type: "primary",
+            author: "البابا شنوده الثالث",
+            title: "موجز في تاريخ الكنيسة القبطية الأرثوذكسية",
+            detail: "منشورات الكنيسة القبطية الأرثوذكسية، القاهرة، ط٣، ٢٠٠٠م",
+          },
+          {
+            tag: "REF 3",
+            type: "secondary",
+            author: "إيريس حبيب المصري",
+            title: "قصة الكنيسة القبطية، ج٥، فصل: الكنيسة في القرن العشرين",
+            detail: "مدرسة الإسكندرية للدراسات المسيحية، القاهرة، ١٩٨٤م",
+          },
+        ],
+      },
+      {
+        id: "nac",
+        name: "العاصمة الإدارية الجديدة",
+        nameEn: "NEW ADMINISTRATIVE CAPITAL",
+        period: "٢٠١٩ م — الحاضر",
+        era: "الألفية الثالثة",
+        ctx: "مصر المستقبل",
+        color: "#64c8ff",
+        sx: 279,
+        sy: 110,
+        zx: 272,
+        zy: 109,
+        zs: 5.5,
+        desc: "في الألفية الثالثة، يسير الكرسي البابوي القبطي بخطى واثقة نحو المستقبل. وقد افتُتحت كاتدرائية ميلاد المسيح في العاصمة الإدارية الجديدة عام ٢٠١٩م، وهي أكبر كاتدرائية في الشرق الأوسط وأفريقيا، لتُصبح مركزاً للحضور البابوي في عاصمة مصر الجديدة. وتعكس هذه الخطوة روح الانفتاح والمشاركة الفاعلة في بناء مصر المستقبل، كما فعل الأقباط على مدى ألفَي عام من العطاء المتواصل في هذه الأرض الطيبة المباركة.",
+        fun: "كاتدرائية ميلاد المسيح بالعاصمة الإدارية الجديدة هي أكبر كاتدرائية في منطقة الشرق الأوسط وأفريقيا بأسرها، وقد افتُتحت عام ٢٠١٩م في حضور رئيس الجمهورية، لتُعلن بدء حقبة جديدة.",
+        coords: "30°01'N 31°47'E",
+        img: "The Pope's headquarters\\Administrative_capital.jpg",
+        patriarchsIntro:
+          "البابا تواضروس الثاني هو البطريرك المائة والثامن عشر، وأول البطاركة في هذه الحقبة الجديدة، التي افتُتحت بأكبر كاتدرائية في الشرق الأوسط وأفريقيا.",
+        patriarchs: [
+          {
+            num: "١١٨",
+            name: "تواضروس الثاني",
+            years: "٢٠١٢–الحاضر",
+            type: "key",
+            note: "بطريرك العاصمة الجديدة",
+          },
+        ],
+        reasons: [
+          "انتقال الحكومة المصرية بمؤسساتها إلى العاصمة الإدارية الجديدة يستوجب على الكنيسة مواكبة مركز القرار لضمان تمثيلها الكافي",
+          "رؤية البابا تواضروس الثاني في تعزيز الشراكة الوطنية بين الكنيسة والدولة والانخراط الفاعل في مشروع مصر الكبير",
+          "بناء كاتدرائية ميلاد المسيح الضخمة (٢٠١٩م) وفّر بالفعل مركزاً دينياً راسخاً في قلب العاصمة الجديدة يستقطب الملايين",
+          "العاصمة الجديدة تتيح للكنيسة مساحاتٍ واسعةً لبناء مجمعات رعوية وتعليمية وخدمية تُجسّد دور الأقباط في بناء وطنهم",
+        ],
+        refs: [
+          {
+            tag: "REF 1",
+            type: "primary",
+            author:
+              "مجلة الكرازة — الجريدة الرسمية للكنيسة القبطية الأرثوذكسية",
+            title:
+              "العدد الخاص بافتتاح كاتدرائية ميلاد المسيح بالعاصمة الإدارية الجديدة",
+            detail:
+              "يناير ٢٠١٩م — يُوثّق الحفل بحضور الرئيس السيسي والبابا تواضروس الثاني",
+          },
+          {
+            tag: "REF 2",
+            type: "primary",
+            author: "الموقع الرسمي للكنيسة القبطية الأرثوذكسية",
+            title:
+              "بيانات البطريركية حول المجمع الكنسي بالعاصمة الإدارية الجديدة",
+            detail: "copticchurch.net — تحديثات دورية ٢٠١٩–٢٠٢٤م",
+          },
+          {
+            tag: "REF 3",
+            type: "secondary",
+            author: "البابا تواضروس الثاني",
+            title: "خطاب افتتاح كاتدرائية ميلاد المسيح — النص الكامل",
+            detail: "المجلة البطريركية القبطية، يناير ٢٠١٩م",
+          },
+        ],
+      },
+    ];
+
+    // ===========================
+    // TEAM DATA
+    // ===========================
+    const TEAM = [
+      {
+        name: "چوناثان حلمي عبده",
+        id: "2024-035S",
+        role: "Developer",
+        img: "Team\\johnthan.png",
+      },
+      {
+        name: "مريم ملاك حبيب",
+        id: "2024-105S",
+        role: "دور العضو",
+        img: "Team\\mira.png"
+      },
+      {
+        name: "روڨينا ميلاد لبيب",
+        id: "2024-043S",
+        role: "دور العضو",
+        img: "Team\\roveena.png"
+      },
+      {
+        name: "روچينا ميلاد لبيب",
+        id: "2024-042S",
+        role: "دور العضو",
+        img: "Team\\rogina.png"
+      },
+      {
+        name: "ڨيولا ماجد وليم",
+        id: "2023-061S",
+        role: "دور العضو",
+        img: "Team\\viola.png"
+      },
+      {
+        name: "ساندي أشرف نجيب",
+        id: "2024-048S",
+        role: "دور العضو",
+        img: "Team\\sandy.png"
+      },
+      {
+        name: "كيرلس أشرف عزيز",
+        id: "2024-070S",
+        role: "دور العضو",
+        img: "Team\\kirollos.png"
+      },
+      {
+        name: "إيمي ميشيل شوقي",
+        id: "2024-015S",
+        role: "دور العضو",
+        img: "Team\\emmy.png"
+      },
+    ];
+
+    function buildTeamGrid() {
+      const grid = document.getElementById("teamGrid");
+      grid.innerHTML = "";
+      TEAM.forEach((m, i) => {
+        const isPlaceholder = m.name.startsWith("اسم");
+        const initials =
+          m.name.replace("اسم العضو ", "").charAt(0) || (i + 1).toString();
+
+        const card = document.createElement("div");
+        card.className = "team-card";
+
+        card.innerHTML = `
+      <div class="tc-photo-wrap">
+        <img class="tc-photo" id="tc-img-${i}" src="${m.img || ""}" alt="${m.name}"
+          onload="this.classList.add('loaded')"
+          onerror="this.style.display='none'"
+          ${m.img ? "" : 'style="display:none"'}/>
+        <div class="tc-photo-placeholder" id="tc-ph-${i}" ${m.img ? 'style="display:none"' : ""}>
+          <div class="tc-initials">${i + 1}</div>
+          <div class="tc-upload-hint">لا توجد صورة</div>
+        </div>
+        <!-- <label class="tc-upload-overlay" title="رفع صورة" for="tc-file-${i}">
+          <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="10" stroke="rgba(212,175,55,0.7)" stroke-width="1.2"/>
+            <path d="M11 7v8M8 10l3-3 3 3" stroke="#d4af37" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </label> -->
+        <input type="file" id="tc-file-${i}" accept="image/*" style="display:none"
+          onchange="uploadTeamPhoto(event,${i})"/>
+      </div>
+      <div class="tc-info">
+        <div class="tc-name${isPlaceholder ? " placeholder" : ""}">${m.name}</div>
+        <div class="tc-id${isPlaceholder ? " placeholder" : ""}">${m.id}</div>
+        <div class="tc-role${isPlaceholder ? " placeholder" : ""}">${m.role}</div>
+      </div>
+    `;
+
+        card.style.opacity = "0";
+        card.style.transform = "translateY(16px)";
+        card.style.transition = `opacity 0.4s ease ${i * 0.07}s, transform 0.4s ease ${i * 0.07}s`;
+        grid.appendChild(card);
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+          }),
+        );
+      });
+    }
+
+    function uploadTeamPhoto(event, idx) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const src = e.target.result;
+        TEAM[idx].img = src;
+        const imgEl = document.getElementById("tc-img-" + idx);
+        const phEl = document.getElementById("tc-ph-" + idx);
+        imgEl.src = src;
+        imgEl.style.display = "block";
+        imgEl.classList.add("loaded");
+        phEl.style.display = "none";
+      };
+      reader.readAsDataURL(file);
+      event.target.value = "";
+    }
+
+    function openTeam() {
+      buildTeamGrid();
+      const ov = document.getElementById("teamOverlay");
+      ov.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeTeam() {
+      const ov = document.getElementById("teamOverlay");
+      ov.style.opacity = "0";
+      ov.style.transition = "opacity 0.25s";
+      setTimeout(() => {
+        ov.classList.remove("open");
+        ov.style.opacity = "";
+        ov.style.transition = "";
+        document.body.style.overflow = "";
+      }, 250);
+    }
+    let panelOpen = false;
+    let visited = new Set();
+    let twTimer = null;
+
+    // ===========================
+    // PARTICLES
+    // ===========================
+    const PC = document.getElementById("particleCanvas");
+    const PCX = PC.getContext("2d");
+    let parts = [];
+
+    function resizePC() {
+      PC.width = window.innerWidth;
+      PC.height = window.innerHeight;
+    }
+    function initParts() {
+      resizePC();
+      parts = [];
+      for (let i = 0; i < 130; i++) {
+        parts.push({
+          x: Math.random() * PC.width,
+          y: Math.random() * PC.height,
+          r: Math.random() * 1.8 + 0.3,
+          a: Math.random() * 0.35 + 0.03,
+          vx: (Math.random() - 0.5) * 0.25,
+          vy: -(Math.random() * 0.35 + 0.08),
+        });
+      }
+    }
+    function drawParts() {
+      PCX.clearRect(0, 0, PC.width, PC.height);
+      parts.forEach((p, i) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.y < -4 || p.x < -4 || p.x > PC.width + 4) {
+          parts[i] = {
+            x: Math.random() * PC.width,
+            y: PC.height + 4,
+            r: Math.random() * 1.8 + 0.3,
+            a: Math.random() * 0.35 + 0.03,
+            vx: (Math.random() - 0.5) * 0.25,
+            vy: -(Math.random() * 0.35 + 0.08),
+          };
+        }
+        PCX.beginPath();
+        PCX.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        PCX.fillStyle = `rgba(212,175,55,${p.a})`;
+        PCX.fill();
+      });
+      requestAnimationFrame(drawParts);
+    }
+    initParts();
+    drawParts();
+    window.addEventListener("resize", resizePC);
+
+    // ===========================
+    // TIMELINE
+    // ===========================
+    function buildTimeline() {
+      const c = document.getElementById("tlNodes");
+      c.innerHTML = "";
+      LOCS.forEach((l, i) => {
+        const n = document.createElement("div");
+        n.className = "tn";
+        n.id = "tn" + i;
+        n.onclick = () => selectLocation(i);
+        const yr = l.period.split("—")[0].trim().replace(/م$/, "").trim();
+        n.innerHTML = `
+      <span class="tn-year">${yr}</span>
+      <div class="nd" id="nd${i}"></div>
+      <span class="tn-name" id="tnl${i}">${l.name.split("—")[0].trim()}</span>
+    `;
+        c.appendChild(n);
+      });
+    }
+
+    // ===========================
+    // SELECT LOCATION
+    // ===========================
+    function selectLocation(idx) {
+      curIdx = idx;
+      const l = LOCS[idx];
+      visited.add(idx);
+      updateCounter();
+      updateTimeline(idx);
+      document.getElementById("coordsDisp").textContent = l.coords;
+      zoomMap(l);
+      openPanel(l);
+      document.getElementById("resetBtn").classList.add("visible");
+    }
+
+    function updateCounter() {
+      const n = visited.size;
+      const ar = "٠١٢٣٤٥٦٧٨٩";
+      const toAr = (x) => x.toString().replace(/[0-9]/g, (d) => ar[d]);
+      document.getElementById("visitCounter").textContent =
+        toAr(n) + "/" + toAr(7);
+    }
+
+    function updateTimeline(idx) {
+      document.querySelectorAll(".nd").forEach((d, i) => {
+        d.classList.toggle("active", i === idx);
+      });
+      document.querySelectorAll(".tn-name").forEach((n, i) => {
+        n.classList.toggle("active", i === idx);
+      });
+    }
+
+    // ===========================
+    // MAP ZOOM
+    // ===========================
+    function zoomMap(l) {
+      const cx = 250,
+        cy = 290,
+        s = l.zs;
+      const tx = cx - l.zx * s;
+      const ty = cy - l.zy * s;
+      gsap.to("#mapGroup", {
+        x: tx,
+        y: ty,
+        scale: s,
+        transformOrigin: "0px 0px",
+        duration: 1.7,
+        ease: "power3.inOut",
+      });
+      // Flash marker
+      const mk = document.getElementById("mk-" + l.id);
+      if (mk) {
+        const core = mk.querySelector(".mk-core");
+        gsap.fromTo(
+          core,
+          { opacity: 1, scale: 1, transformOrigin: "center center" },
+          {
+            opacity: 0.2,
+            scale: 2,
+            repeat: 2,
+            yoyo: true,
+            duration: 0.25,
+            ease: "power2.inOut",
+          },
+        );
+      }
+    }
+
+    function resetMap() {
+      gsap.to("#mapGroup", {
+        x: 0,
+        y: 0,
+        scale: 1,
+        transformOrigin: "0px 0px",
+        duration: 1.2,
+        ease: "power2.inOut",
+      });
+      document.getElementById("resetBtn").classList.remove("visible");
+    }
+
+    // ===========================
+    // TABS
+    // ===========================
+    function switchTab(name, btn) {
+      document
+        .querySelectorAll(".tab-btn")
+        .forEach((b) => b.classList.remove("active"));
+      document
+        .querySelectorAll(".tab-pane")
+        .forEach((p) => p.classList.remove("active"));
+      btn.classList.add("active");
+      document.getElementById("tab-" + name).classList.add("active");
+    }
+
+    // ===========================
+    // PANEL
+    // ===========================
+    function openPanel(l) {
+      // Static header
+      document.getElementById("panelTitle").textContent = l.name;
+      document.getElementById("panelSub").textContent =
+        l.nameEn + " • " + l.period;
+      document.getElementById("periodBadge").textContent = l.period;
+      document.getElementById("infoEra").textContent = l.era;
+      document.getElementById("infoCtx").textContent = l.ctx;
+
+      // Badge color
+      const pb = document.getElementById("periodBadge");
+      pb.style.color = l.color;
+      pb.style.borderColor = l.color + "88";
+
+      // Load image + parallax scroll
+      const imgEl = document.getElementById("locImg");
+      const ph = document.getElementById("imgPlaceholder");
+      // Reset
+      imgEl.classList.remove("loaded", "ken");
+      imgEl.style.transform = "translateY(0px)";
+      imgEl.style.transition = "none";
+      imgEl.style.display = "none";
+      ph.style.display = "block";
+      document.getElementById("imgDlBtn").style.display = "none";
+      document.getElementById("tab-history").scrollTop = 0;
+
+      if (l.img) {
+        imgEl.src = l.img;
+        imgEl.onload = function () {
+          imgEl.style.display = "block";
+          imgEl.classList.add("loaded");
+          ph.style.display = "none";
+          document.getElementById("imgDlBtn").style.display = "flex";
+        };
+        imgEl.onerror = function () {
+          imgEl.style.display = "none";
+          ph.style.display = "block";
+        };
+      }
+
+      // Parallax: scroll history pane → image moves UP (fix: use onscroll to avoid listener accumulation)
+      const histPane = document.getElementById("tab-history");
+      histPane.onscroll = function () {
+        const scrolled = histPane.scrollTop;
+        const shift = Math.min(scrolled * 0.6, 90);
+        imgEl.style.transform = `translateY(${-shift}px)`;
+      };
+
+      // Reset history tab
+      if (twTimer) {
+        clearTimeout(twTimer);
+        twTimer = null;
+      }
+      document.getElementById("descText").textContent = "";
+      document.getElementById("twCursor").style.display = "inline-block";
+      document.getElementById("funFactBox").style.display = "none";
+
+      // Reset sources tab
+      document.getElementById("reasonsList").innerHTML = "";
+      document.getElementById("refsList").innerHTML = "";
+      populateSourcesTab(l);
+
+      // Render patriarchs tab
+      renderPatriarchs(l);
+
+      // Switch to history tab + reset scroll
+      document.querySelectorAll(".tab-btn").forEach((b, i) => {
+        if (i === 0) b.classList.add("active");
+        else b.classList.remove("active");
+      });
+      document.querySelectorAll(".tab-pane").forEach((p, i) => {
+        if (i === 0) p.classList.add("active");
+        else p.classList.remove("active");
+      });
+      document.getElementById("tab-history").scrollTop = 0;
+
+      // Slide panel in + shift map
+      if (!panelOpen) {
+        applyPanelSize(false); // measure fresh dimensions first
+        gsap.to("#sidePanel", { x: 0, duration: 0.75, ease: "power3.out" });
+        if (!isMobile()) {
+          gsap.to("#mapSection", {
+            paddingRight: PANEL_W + "px",
+            duration: 0.75,
+            ease: "power3.out",
+          });
+        }
+        panelOpen = true;
+      } else {
+        gsap.fromTo(
+          "#sidePanel",
+          { x: 15 },
+          { x: 0, duration: 0.4, ease: "power2.out" },
+        );
+      }
+
+      // Start typewriter
+      setTimeout(() => typewrite(l.desc, 0, l.fun), 400);
+    }
+
+    function populateSourcesTab(l) {
+      const label = document.getElementById("reasonsLabel");
+      label.textContent = l.isFounding
+        ? "أسباب اختيار الإسكندرية مقراً أول"
+        : "أسباب الانتقال إلى هذا المقر";
+
+      const arNums = "١٢٣٤٥٦٧٨٩";
+      const rList = document.getElementById("reasonsList");
+      (l.reasons || []).forEach((r, i) => {
+        const item = document.createElement("div");
+        item.className = "reason-item visible";
+        item.innerHTML = `<div class="reason-num">${arNums[i]}</div><p class="reason-text">${r}</p>`;
+        rList.appendChild(item);
+      });
+
+      const typeLabels = {
+        primary: "أساسي",
+        secondary: "مكمّل",
+        tertiary: "مرجع",
+      };
+      const rfList = document.getElementById("refsList");
+      (l.refs || []).forEach((r) => {
+        const item = document.createElement("div");
+        item.className = "ref-item visible";
+        item.innerHTML = `
+      <div class="ref-tag ${r.type}">${typeLabels[r.type] || r.type}</div>
+      <div class="ref-content">
+        <div class="ref-author">${r.author}</div>
+        <div class="ref-title">${r.title}</div>
+        <div class="ref-detail">${r.detail}</div>
+      </div>`;
+        rfList.appendChild(item);
+      });
+    }
+
+    function renderPatriarchs(l) {
+      document.getElementById("patriarchIntro").textContent =
+        l.patriarchsIntro || "";
+
+      const cw = document.getElementById("popeCountWrap");
+      cw.innerHTML = "";
+      if (l.patriarchs && l.patriarchs.length) {
+        const badge = document.createElement("div");
+        badge.className = "pope-count-badge";
+        // Count total popes in era (approximate from period)
+        const totalNote =
+          l.patriarchs.length < 5 ? "" : " — مختارون من أبرزهم";
+        badge.innerHTML = `<span>${l.patriarchs.length}</span> بطريرك معروض${totalNote}`;
+        cw.appendChild(badge);
+      }
+
+      const track = document.getElementById("ppTrack");
+      track.innerHTML = "";
+      const pps = l.patriarchs || [];
+
+      // Helper: convert arabic numeral string to integer for comparison
+      const arToInt = (s) => {
+        const map = {
+          "٠": 0,
+          "١": 1,
+          "٢": 2,
+          "٣": 3,
+          "٤": 4,
+          "٥": 5,
+          "٦": 6,
+          "٧": 7,
+          "٨": 8,
+          "٩": 9,
+        };
+        return parseInt(s.replace(/[٠-٩]/g, (d) => map[d]) || "0");
+      };
+
+      pps.forEach((p, i) => {
+        // Add gap indicator if there's a skip between consecutive entries
+        if (i > 0) {
+          const prev = arToInt(pps[i - 1].num);
+          const curr = arToInt(p.num);
+          if (curr - prev > 1) {
+            const gap = document.createElement("div");
+            gap.className = "pp-gap";
+            const skipped = curr - prev - 1;
+            gap.innerHTML = `<span class="pp-gap-dots">•••</span><span class="pp-gap-lbl">${skipped > 1 ? skipped + " بطاركة" : "بطريرك"}</span>`;
+            track.appendChild(gap);
+          }
+        }
+
+        const node = document.createElement("div");
+        node.className = "pp-node";
+        const circleClass =
+          "pp-circle" +
+          (p.type === "key" ? " key" : p.type === "hi" ? " highlight" : "");
+        // Sequential display number (1,2,3...)
+        const seqNum = i + 1;
+        node.innerHTML = `
+      <div class="pp-papal-num">البابا ${p.num}</div>
+      <div class="${circleClass}">${seqNum}</div>
+      <div class="pp-name">${p.name}</div>
+      <div class="pp-years">${p.years}</div>
+      ${p.note ? `<div class="pp-note">${p.note}</div>` : ""}
+    `;
+        track.appendChild(node);
+        setTimeout(() => node.classList.add("visible"), 80 + i * 110);
+      });
+    }
+
+    function closePanel() {
+      gsap.to("#sidePanel", {
+        x: PANEL_W + 10,
+        duration: 0.5,
+        ease: "power3.in",
+      });
+      if (!isMobile()) {
+        gsap.to("#mapSection", {
+          paddingRight: "0px",
+          duration: 0.55,
+          ease: "power3.in",
+        });
+      }
+      panelOpen = false;
+      resetMap();
+      document.getElementById("resetBtn").classList.remove("visible");
+      document.getElementById("tab-history").onscroll = null;
+    }
+
+    // ===========================
+    // DOWNLOAD IMAGE AS PNG
+    // ===========================
+    function downloadImgAsPng() {
+      const imgEl = document.getElementById("locImg");
+      if (!imgEl || !imgEl.src) return;
+      const loc = LOCS[curIdx] || {};
+      const name = (loc.name || "image")
+        .replace(/[^a-zA-Z\u0600-\u06FF\s]/g, "")
+        .trim()
+        .replace(/\s+/g, "-");
+
+      // Draw onto canvas to export as PNG
+      const canvas = document.createElement("canvas");
+      const w = imgEl.naturalWidth || 800;
+      const h = imgEl.naturalHeight || 500;
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext("2d");
+
+      // If same-origin or base64 — draw directly
+      try {
+        ctx.drawImage(imgEl, 0, 0, w, h);
+        const link = document.createElement("a");
+        link.download = name + ".png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      } catch (e) {
+        // Cross-origin image: fetch via blob proxy
+        fetch(imgEl.src)
+          .then((r) => r.blob())
+          .then((blob) => {
+            const url = URL.createObjectURL(blob);
+            const tmp = new Image();
+            tmp.onload = function () {
+              ctx.drawImage(tmp, 0, 0, w, h);
+              const link = document.createElement("a");
+              link.download = name + ".png";
+              link.href = canvas.toDataURL("image/png");
+              link.click();
+              URL.revokeObjectURL(url);
+            };
+            tmp.src = url;
+          })
+          .catch(() => {
+            // Fallback: direct download of original src
+            const link = document.createElement("a");
+            link.download = name + ".png";
+            link.href = imgEl.src;
+            link.target = "_blank";
+            link.click();
+          });
+      }
+    }
+
+    function typewrite(text, i, fun) {
+      if (i < text.length) {
+        document.getElementById("descText").textContent += text[i];
+        twTimer = setTimeout(() => typewrite(text, i + 1, fun), 18);
+      } else {
+        document.getElementById("twCursor").style.display = "none";
+        setTimeout(() => showFunFact(fun), 350);
+      }
+    }
+
+    function showFunFact(txt) {
+      const box = document.getElementById("funFactBox");
+      document.getElementById("funFactText").textContent = txt;
+      box.style.display = "block";
+      gsap.fromTo(
+        box,
+        { opacity: 0, y: 12 },
+        { opacity: 1, y: 0, duration: 0.55, ease: "power2.out" },
+      );
+    }
+
+    function nextLoc() {
+      selectLocation((curIdx + 1) % LOCS.length);
+    }
+    function prevLoc() {
+      selectLocation((curIdx - 1 + LOCS.length) % LOCS.length);
+    }
+
+    // ===========================
+    // WELCOME
+    // ===========================
+    function dismissWelcome() {
+      gsap.to("#welcome", {
+        opacity: 0,
+        duration: 0.9,
+        ease: "power2.out",
+        onComplete: () => {
+          document.getElementById("welcome").style.display = "none";
+        },
+      });
+    }
+
+    // ===========================
+    // MARKER HOVER (GSAP)
+    // ===========================
+    document.querySelectorAll(".mk").forEach((m) => {
+      m.addEventListener("mouseenter", function () {
+        gsap.to(this.querySelector(".mk-core"), {
+          scale: 1.6,
+          transformOrigin: "center center",
+          duration: 0.3,
+          ease: "back.out(1.5)",
+        });
+      });
+      m.addEventListener("mouseleave", function () {
+        gsap.to(this.querySelector(".mk-core"), {
+          scale: 1,
+          transformOrigin: "center center",
+          duration: 0.3,
+          ease: "power2.out",
+        });
+      });
+    });
+
+    // ===========================
+    // INIT
+    // ===========================
+    gsap.set("#mapGroup", { transformOrigin: "0px 0px" });
+
+    /* ── Panel sizing helpers ── */
+    function isMobile() {
+      return window.innerWidth <= 640;
+    }
+
+    function calcPanelWidth() {
+      const w = window.innerWidth;
+      if (w <= 640) return w;
+      if (w <= 900) return Math.min(460, Math.max(300, Math.round(w * 0.58)));
+      if (w <= 1024)
+        return Math.min(520, Math.max(380, Math.round(w * 0.45)));
+      return Math.min(720, Math.max(440, Math.round(w * 0.38)));
+    }
+
+    /**
+     * applyPanelSize()
+     * Measures the REAL header + timeline heights and applies
+     * width / height / top directly on #sidePanel's inline style,
+     * then parks it off-screen via GSAP (x = width + 10).
+     * Called on init AND on every resize.
+     */
+    function applyPanelSize(keepOpen) {
+      PANEL_W = calcPanelWidth();
+
+      const hdrEl = document.getElementById("hdr");
+      const tlEl = document.getElementById("timeline");
+      const sp = document.getElementById("sidePanel");
+
+      const hdrH = hdrEl.offsetHeight;
+      const tlH = tlEl.offsetHeight;
+
+      // Write directly — bypasses any CSS variable / cascade ambiguity
+      sp.style.width = PANEL_W + "px";
+      sp.style.top = hdrH + "px";
+      sp.style.height = `calc(100dvh - ${hdrH}px - ${tlH}px)`;
+
+      // Keep CSS variable in sync for any remaining CSS consumers
+      document.documentElement.style.setProperty("--panel-w", PANEL_W + "px");
+
+      if (!keepOpen) {
+        // Park off-screen without animation
+        gsap.set(sp, { x: PANEL_W + 10 });
+      } else {
+        // Panel is open — keep it at x:0 and fix map padding
+        gsap.set(sp, { x: 0 });
+        gsap.set("#mapSection", {
+          paddingRight: isMobile() ? "0px" : PANEL_W + "px",
+        });
+      }
+    }
+
+    let PANEL_W = calcPanelWidth();
+    applyPanelSize(false);
+
+    /* ── Resize handler ── */
+    let _resizeTimer;
+    window.addEventListener("resize", () => {
+      clearTimeout(_resizeTimer);
+      _resizeTimer = setTimeout(() => applyPanelSize(panelOpen), 60);
+    });
+
+    /* ── Mobile swipe-to-close ── */
+    (function attachSwipe() {
+      const sp = document.getElementById("sidePanel");
+      let startX = null,
+        startY = null;
+      sp.addEventListener(
+        "touchstart",
+        (e) => {
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+        },
+        { passive: true },
+      );
+      sp.addEventListener(
+        "touchend",
+        (e) => {
+          if (startX === null) return;
+          const dx = e.changedTouches[0].clientX - startX;
+          const dy = Math.abs(e.changedTouches[0].clientY - startY);
+          // Swipe right (positive dx) by at least 60px, mostly horizontal
+          if (dx > 60 && dy < 80 && panelOpen) closePanel();
+          startX = startY = null;
+        },
+        { passive: true },
+      );
+    })();
+
+    buildTimeline();
+
+    // Entrance animations
+    gsap.fromTo(
+      "#hdr",
+      { y: -70, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.2 },
+    );
+    gsap.fromTo(
+      "#timeline",
+      { y: 90, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.4 },
+    );
+    gsap.fromTo(
+      "#egyptSvg",
+      { scale: 0.88, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 1.6, ease: "power3.out", delay: 0.1 },
+    );
+
+    // Animate welcome cross
+    gsap.fromTo(
+      "#wCross",
+      { rotation: -180, scale: 0.3, opacity: 0 },
+      {
+        rotation: 0,
+        scale: 1,
+        opacity: 1,
+        duration: 1.5,
+        ease: "elastic.out(1,0.6)",
+        delay: 0.3,
+      },
+    );
+    gsap.fromTo(
+      "#wCrossWrap .w-ring",
+      { opacity: 0 },
+      { opacity: 1, duration: 1, delay: 1 },
+    );
+  </script>
+</body>
+
+</html>
