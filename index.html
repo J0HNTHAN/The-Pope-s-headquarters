@@ -2651,6 +2651,31 @@
             </text>
           </g>
 
+          <!-- 8. Fifth Settlement / Triangle of Hope — 31.47°E, 30.02°N → (270, 113) -->
+          <g class="mk" id="mk-fifth-settlement" onclick="selectLocation(7)">
+            <circle cx="270" cy="113" r="18" fill="rgba(192,132,252,0.06)" class="pulse1"
+              style="transform-origin: 270px 113px; animation-delay: 1.4s" />
+            <circle cx="270" cy="113" r="11" fill="rgba(192,132,252,0.09)" class="pulse2"
+              style="transform-origin: 270px 113px; animation-delay: 1.9s" />
+            <!-- Diamond shape -->
+            <polygon points="270,105 277,113 270,121 263,113" fill="rgba(192,132,252,0.2)" stroke="#c084fc"
+              stroke-width="1.8" class="mk-core" />
+            <text x="270" y="116.5" fill="#c084fc" font-family="Cairo,sans-serif" font-size="7" text-anchor="middle"
+              font-weight="900">
+              ٨
+            </text>
+            <text x="270" y="128" fill="#c084fc" font-family="Cairo,sans-serif" font-size="6" text-anchor="middle"
+              font-weight="700">
+              مثلث الأمل
+            </text>
+            <rect x="253" y="130" width="34" height="7" rx="2" fill="rgba(192,132,252,0.12)"
+              stroke="rgba(192,132,252,0.4)" stroke-width="0.5" />
+            <text x="270" y="136" fill="rgba(192,132,252,0.9)" font-family="monospace" font-size="4"
+              text-anchor="middle">
+              التجمع الخامس
+            </text>
+          </g>
+
           <!-- 7. New Admin Capital — 31.77°E, 30.02°N → (279, 110) -->
           <g class="mk" id="mk-nac" onclick="selectLocation(6)">
             <circle cx="279" cy="110" r="22" fill="rgba(100,200,255,0.05)" class="pulse1"
@@ -2861,7 +2886,7 @@
       <div class="w-line"></div>
       <span style="opacity: 0.5">•</span>
       <div class="w-line"></div>
-      <span>٢٠١٩ م</span>
+      <span>٢٠٢٦ م</span>
     </div>
     <button class="btn-gold" style="padding: 0.7rem 2.5rem; font-size: 1rem; margin-top: 10px"
       onclick="dismissWelcome()">
@@ -3616,6 +3641,71 @@
           },
         ],
       },
+      {
+        id: "fifth-settlement",
+        name: "كاتدرائية القديسين مارمرقس الرسول و البابا كيرلس السادس",
+        nameEn: "SS. MARK & POPE CYRIL VI CATHEDRAL",
+        period: "التجمع الخامس — مثلث الأمل",
+        era: "الحقبة المعاصرة",
+        ctx: "القاهرة الجديدة",
+        color: "#c084fc",
+        sx: 270,
+        sy: 113,
+        zx: 268,
+        zy: 110,
+        zs: 6.5,
+        desc: "تقع كاتدرائية القديسين مارمرقس الرسول والبابا كيرلس السادس في مثلث الأمل بالتجمع الخامس «إنفوجراف»، لتكون مرساةً روحيةً لأبناء هذه المدينة الحديثة المتنامية. وتجمع الكاتدرائية بين اسمَي قبَطيين عظيمَين: القديس مرقس الرسول مؤسّس الكرسي البابوي عام ٤٢م، والبطريرك المائة والسادس عشر البابا كيرلس السادس (١٩٠٢–١٩٧١م) المعروف بـ«نسمة الروح القدس»، وقد أُعلن قديساً معترفاً به في الكنيسة القبطية. وقد شهد عهده لحظةً تاريخيةً فارقة حين عادت قطعة من رفات القديس مرقس الرسول من كاتدرائية سان ماركو في البندقية إلى الإسكندرية في يونيو ١٩٦٨م، مما يجعل الرابطة بين الاسمَين أعمق من مجرد تسمية.",
+        fun: "قبل انتخابه بطريركاً، عاش البابا كيرلس السادس حياةً نسكيةً صارمة في طاحونة هواء متهالكة بحي شبرا، إذ تحوّلت الطاحونة إلى هيكل صلاة. ولمّا انتُخب عام ١٩٥٩م جاءت رسالة الانتخاب إليه وهو يُقيم في مغارة بجبل المقطم — فكان انتخابه مفاجأةً له قبل أن تكون مفاجأةً للكنيسة.",
+        coords: "30°02'N 31°28'E",
+        img: "The Pope's headquarters\\Fifth_Settlement.png",
+        patriarchsIntro:
+          "تحمل هذه الكاتدرائية اسمَي أبرز قديسَين في تاريخ الكرسي المرقسي: مؤسّسه القديس مرقس الرسول، والبابا كيرلس السادس الذي ربطه بمرقس ميراثٌ روحي حيّ تجلّى في عودة الرفات على يديه عام ١٩٦٨م.",
+        patriarchs: [
+          {
+            num: "١",
+            name: "مرقس الرسول",
+            years: "٤٢–٦٨م",
+            type: "key",
+            note: "مؤسس الكرسي الرسولي",
+          },
+          {
+            num: "١١٦",
+            name: "كيرلس السادس",
+            years: "١٩٥٩–١٩٧١م",
+            type: "key",
+            note: "نسمة الروح القدس • قديس",
+          },
+        ],
+        reasons: [
+          "التجمع الخامس من أسرع مناطق القاهرة الكبرى نمواً ويضمّ تجمّعاً سكانياً قبطياً كبيراً يحتاج مركزاً كنسياً يخدمه روحياً ورعوياً",
+          "تكريم البابا كيرلس السادس القديس، الذي دُشِّنت في عهده كاتدرائية القديس مرقس بالعباسية عام ١٩٦٨م وشهد على يديه عودة رفات الرسول",
+          "الرغبة في أن يكون للأحياء الحديثة كاتدرائية تجمع إرث الكنيسة منذ تأسيسها عام ٤٢م حتى نهضتها المعاصرة في القرن العشرين",
+          "موقع مثلث الأمل يتيح بناءً كنسياً ضخماً بمواصفات معمارية عصرية تعكس الحضور القبطي المستقبلي في قلب القاهرة الجديدة",
+        ],
+        refs: [
+          {
+            tag: "REF 1",
+            type: "primary",
+            author: "الأبرشية العامة للكنيسة القبطية الأرثوذكسية",
+            title: "كاتدرائية القديسين مارمرقس الرسول والبابا كيرلس السادس — مثلث الأمل، التجمع الخامس",
+            detail: "البطريركية القبطية الأرثوذكسية — copticchurch.net",
+          },
+          {
+            tag: "REF 2",
+            type: "primary",
+            author: "مجلة الكرازة — الجريدة الرسمية للكنيسة القبطية الأرثوذكسية",
+            title: "البابا كيرلس السادس: سيرة القديس — من طاحونة شبرا إلى الكرسي المرقسي",
+            detail: "أرشيف الكرازة، القاهرة — يونيو ١٩٦٨م (عودة رفات مرقس)، ومارس ١٩٧١م (نياحة البابا)",
+          },
+          {
+            tag: "REF 3",
+            type: "secondary",
+            author: "أزيز سوريال عطية (محرر)",
+            title: 'The Coptic Encyclopedia, Vol.2 — "Cyril VI" & "Mark, Saint"',
+            detail: "Macmillan Publishing, New York, 1991",
+          },
+        ],
+      },
     ];
 
     // ===========================
@@ -3631,43 +3721,43 @@
       {
         name: "مريم ملاك حبيب",
         id: "2024-105S",
-        role: "دور العضو",
+        role: "Researcher",
         img: "Team\\mira.png"
       },
       {
         name: "روڨينا ميلاد لبيب",
         id: "2024-043S",
-        role: "دور العضو",
+        role: "Content Writer",
         img: "Team\\roveena.png"
       },
       {
         name: "روچينا ميلاد لبيب",
         id: "2024-042S",
-        role: "دور العضو",
+        role: "Content Writer",
         img: "Team\\rogina.png"
       },
       {
         name: "ڨيولا ماجد وليم",
         id: "2023-061S",
-        role: "دور العضو",
+        role: "Researcher",
         img: "Team\\viola.png"
       },
       {
         name: "ساندي أشرف نجيب",
         id: "2024-048S",
-        role: "دور العضو",
+        role: "Scientific Reviewer",
         img: "Team\\sandy.png"
       },
       {
         name: "كيرلس أشرف عزيز",
         id: "2024-070S",
-        role: "دور العضو",
+        role: "Scientific Reviewer",
         img: "Team\\kirollos.png"
       },
       {
         name: "إيمي ميشيل شوقي",
         id: "2024-015S",
-        role: "دور العضو",
+        role: "Scientific Reviewer",
         img: "Team\\emmy.png"
       },
     ];
